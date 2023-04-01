@@ -1,8 +1,35 @@
 DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;
 
+CREATE TABLE IF NOT EXISTS usuarios(
+	id SERIAL PRIMARY KEY,
+	username VARCHAR(50) UNIQUE NOT NULL,
+	password_hash VARCHAR(100) NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_usuarios_username ON usuarios(username);
+
+CREATE TABLE IF NOT EXISTS bitacora (
+    id SERIAL PRIMARY KEY,
+    usuario_id INTEGER REFERENCES usuarios,
+    tabla VARCHAR(50),
+    accion VARCHAR(10),
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    valores_viejos JSON,
+    valores_nuevos JSON
+);
+
+CREATE TABLE IF NOT EXISTS admins(
+	id SERIAL PRIMARY KEY,
+	usuario_id INTEGER REFERENCES usuarios,
+	nombre VARCHAR(50) NOT NULL,
+	apellidos VARCHAR(50) NOT NULL,
+	telefono VARCHAR(15) DEFAULT '-',
+	direccion VARCHAR(100) DEFAULT '-',
+);
+
 CREATE TABLE IF NOT EXISTS pacientes(
 	id SERIAL PRIMARY KEY,
+	usuario_id INTEGER REFERENCES usuarios,
 	nombre VARCHAR(50) NOT NULL,
 	apellidos VARCHAR(50) NOT NULL,
 	telefono VARCHAR(15) DEFAULT '-',
@@ -16,6 +43,7 @@ CREATE INDEX IF NOT EXISTS idx_pacientes_id ON pacientes(id);
 
 CREATE TABLE IF NOT EXISTS medicos(
 	id SERIAL PRIMARY KEY,
+	usuario_id INTEGER REFERENCES usuarios,
 	nombre VARCHAR(50) NOT NULL,
 	apellidos VARCHAR(50) NOT NULL,
 	telefono VARCHAR(15) DEFAULT '-',
@@ -106,7 +134,7 @@ CREATE INDEX IF NOT EXISTS idx_enfermedades_heredadas ON enfermedades_heredadas(
 
 CREATE TABLE IF NOT EXISTS status(
     id SERIAL PRIMARY KEY,
-    status varchar(50) NOT NULL
+    status varchar(25) NOT NULL -- Murio / Sigue enfermo / Recuperado
 );
 
 CREATE TABLE IF NOT EXISTS consultas(
@@ -142,6 +170,7 @@ CREATE TABLE IF NOT EXISTS medicos_tratantes(
     medico_id INTEGER REFERENCES medicos
 );
 CREATE INDEX IF NOT EXISTS idx_medicos_tratantes ON medicos_tratantes(consulta_id, medico_id);
+
 
 INSERT INTO continentes VALUES
 ('AF', 'Africa'),
@@ -407,3 +436,17 @@ INSERT INTO paises VALUES
 (250, 'YE', 'Yemen', 'AS', 'YEM'),
 (251, 'ZM', 'Zambia', 'AF', 'ZMB'),
 (252, 'ZW', 'Zimbabue', 'AF', 'ZWE');
+
+CREATE TABLE IF NOT EXISTS test(
+	id serial PRIMARY KEY,
+	usuario varchar(25) DEFAULT 'Jhon Doe',
+	texto varchar(255) NOT NULL
+);
+
+INSERT INTO test(texto) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit');
+INSERT INTO test(texto) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit');
+INSERT INTO test(texto) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit');
+INSERT INTO test(texto) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit');
+INSERT INTO test(texto) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit');
+INSERT INTO test(texto) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit');
+INSERT INTO test(texto) VALUES ('Lorem ipsum dolor sit amet, consectetur adipiscing elit');
