@@ -1,0 +1,19 @@
+# Node.js modules
+node_modules/
+
+# Logs
+*.log
+
+# IDE configuration files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Environment variables
+.env
+.env.*
+
+# Build artifacts
+/build/
+/dist/
