@@ -1,0 +1,19 @@
+# Node.js modules
+node_modules/
+
+# Log files
+*.log
+
+# Webstorm Configuration Files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Environment Variables
+.env
+.env.*
+
+# Build artifacts
+/build/
+/dist/
