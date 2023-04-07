@@ -9,4 +9,8 @@ router.get('/users', getUsers);
 router.get('/users/:id', findUser);
 router.post('/users', createUser);
 
+router.get('/', (req, res) => {
+    res.send('Bienvenid@ al speedrun del proyecto');
+});
+
 module.exports = router;

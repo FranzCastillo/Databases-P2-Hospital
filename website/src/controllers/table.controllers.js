@@ -1,4 +1,5 @@
 const pool = require('../db');
+const supabase = require('../client.js');
 
 const getTables = async (req, res) => {
     const result = await pool.query('SELECT table_name FROM information_schema.tables WHERE table_schema = \'public\'');
