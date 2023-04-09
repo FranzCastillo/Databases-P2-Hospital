@@ -4,6 +4,7 @@ import {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {supabase} from '../supabase/client';
 
+
 function Login() {
     const [email, setEmail] = useState('');
     const navigate = useNavigate();
@@ -25,9 +26,8 @@ function Login() {
         }
       }, [navigate]);
   
-  return (
+  return (    
     <div>
-
         <form onSubmit={handleSubmit}>
             <input 
                 type="email"  
