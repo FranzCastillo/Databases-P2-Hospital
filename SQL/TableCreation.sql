@@ -1,14 +1,9 @@
-DROP SCHEMA public CASCADE;
-CREATE SCHEMA public;
-
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
-
 CREATE TABLE IF NOT EXISTS usuarios(
 	id SERIAL PRIMARY KEY,
-	username VARCHAR(50) UNIQUE NOT NULL,
-	password_hash VARCHAR(100) NOT NULL
+	email VARCHAR(50) UNIQUE NOT NULL,
+	role VARCHAR(100) NOT NULL
 );
-CREATE INDEX IF NOT EXISTS idx_usuarios_username ON usuarios(username);
+CREATE INDEX IF NOT EXISTS idx_usuarios_username ON usuarios(email);
 
 CREATE TABLE IF NOT EXISTS bitacora (
     id SERIAL PRIMARY KEY,
