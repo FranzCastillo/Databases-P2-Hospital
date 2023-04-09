@@ -15,11 +15,18 @@ function Login() {
             await supabase.auth.signInWithOtp ({
                 email: email,
             });
-            const result = await supabase.from("usuarios").insert({
-                email: email, 
-                role: "user"
-            })
-            console.log(result);
+
+            const { data, error } = await supabase
+            .from("usuarios")
+            .select("*")
+            .eq('email', email);
+
+            if (data.length == 0){
+                const result = await supabase.from("usuarios").insert({
+                    email: email, 
+                    role: "user"
+                })
+            }
         } catch (error) {
             console.log(error);
         }
