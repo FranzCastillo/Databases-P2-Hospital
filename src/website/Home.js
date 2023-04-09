@@ -22,7 +22,7 @@ function Home() {
 
   return (
     <div>
-      <h1> Bienvenid@, {email}</h1>
+      <h1> Bienvenid@, {email} </h1>
       
       <button onClick={() => supabase.auth.signOut()}>
         Cerrar sesión
