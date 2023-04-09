@@ -16,13 +16,13 @@ function Login() {
                 email: email,
             });
 
-            const { data, error } = await supabase
+            const {data} = await supabase
             .from("usuarios")
             .select("*")
             .eq('email', email);
 
-            if (data.length == 0){
-                const result = await supabase.from("usuarios").insert({
+            if (data.length === 0){
+                await supabase.from("usuarios").insert({
                     email: email, 
                     role: "user"
                 })

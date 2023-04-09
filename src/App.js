@@ -37,13 +37,10 @@ function App() {
             setUserRole(data[0].role);
           }
         }
-
       };
-  
       getCurrentUser();
-
     });
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="App">
