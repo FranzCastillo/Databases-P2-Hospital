@@ -12,19 +12,23 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            //Validacion campo vacio
             if (email.trim() === '') {
                 alert('El campo de entrada está vacío. Por favor, ingrese un valor.');
               }
             else{
+                //Mandar magic link al email
                 await supabase.auth.signInWithOtp ({
                     email: email,
                 });
-    
+                
+                //Select usuarios
                 const {data} = await supabase
                 .from("usuarios")
                 .select("*")
                 .eq('email', email);
-    
+                
+                //Validacion, si el email no existe se ingresa, de lo contrario, no
                 if (data.length === 0){
                     await supabase.from("usuarios").insert({
                         email: email, 
@@ -38,6 +42,7 @@ function Login() {
         }
     }
 
+    //Validación para que no deje entrar a otra página si no se ha loggeado
     useEffect(() => {
         if (!supabase.auth.getUser()){
           navigate('/');

@@ -6,6 +6,8 @@ import {supabase} from './supabase/client';
 import Login from './website/Login';
 import Home from './website/Home';
 import NotFound from './website/NotFound';
+import Records from './website/Records';
+
 import NavBarAdmin from './website/components/NavBarAdmin';
 import NavBarUser from './website/components/NavBarUser';
 
@@ -14,6 +16,7 @@ function App() {
   const location = useLocation();
   const [userRole, setUserRole] = useState(null);
 
+  //Validación para que no deje entrar si el usuario no esta loggeado
   useEffect(() => {  
     supabase.auth.onAuthStateChange((event, session) => {
       if (!session) {
@@ -22,7 +25,8 @@ function App() {
       else if (window.location.pathname === '/login') {
         navigate('/');
       }
-  
+      
+      //Obtener el usuario actual para ver su rol (admin o user)
       const getCurrentUser = async () => {
         const user = (await supabase.auth.getUser()).data.user
         if (user) {
@@ -42,6 +46,7 @@ function App() {
     });
   }, [navigate]);
 
+  //Segunda linea del return: Validacion para el navbar, pues es diferente dependiendo de si es user o admin
   return (
     <div className="App">
       {userRole && location.pathname !== "/login" && (userRole === 'user' ? <NavBarUser /> : <NavBarAdmin />)}
@@ -49,6 +54,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/expedientes" element={<Records />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

@@ -7,11 +7,13 @@ function Home() {
   const navigate = useNavigate();
   const [email, setEmail] = useState(null);
 
+  //Validación para que no deje entrar a login (pues el usuario ya está loggeado)
   useEffect(() => {
     if (!supabase.auth.getUser()){
       navigate('/login'); 
     }
-
+    
+    //Obtener email para mostrarlo en la web
     const fetchEmail = async () => {
       const email = (await supabase.auth.getUser()).data.user.email
       setEmail(email);
