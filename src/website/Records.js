@@ -69,15 +69,15 @@ function Records() {
                 <br></br>
                 <b> Especialidad del médico tratante: </b> <a> {record.especialidad_medico} </a>
                 <br></br>
-                <b> Tratamiento: </b> <a> {record.nombre_tratamiento} </a>
-                <br></br>
                 <b> Lugar de atención: </b> <a> {record.nombre_lugar} </a>
                 <br></br>
                 <b> Fecha y hora de atención: </b> <a> {record.nombre_fecha} </a>
                 <br></br>
+                <b> Examen realizado: </b> <a> {record.nombre_examen} </a>
+                <br></br>
                 <b> Enfermedad diagnósticada: </b> <a> {record.nombre_enfermedad} </a>
                 <br></br>
-                <b> Examen realizado: </b> <a> {record.nombre_examen} </a>
+                <b> Tratamiento: </b> <a> {record.nombre_tratamiento} </a>
                 <br></br>
                 <b> Cirugía realizada: </b> <a> {record.nombre_cirugia} </a>
                 <br></br>
