@@ -67,6 +67,8 @@ function Records() {
                 <br></br>
                 <b> Médico tratante: </b> <a> {record.nombre_medico} {record.apellidos_medico} </a>
                 <br></br>
+                <b> Especialidad del médico tratante: </b> <a> {record.especialidad_medico} </a>
+                <br></br>
                 <b> Tratamiento: </b> <a> {record.nombre_tratamiento} </a>
                 <br></br>
                 <b> Lugar de atención: </b> <a> {record.nombre_lugar} </a>
