@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import {supabase} from './supabase/client';
 
 import SignUp from './website/SignUp';
-import LogIn from './website/LogIn';
+import LogIn from './website/Login';
 import Home from './website/Home';
 import NotFound from './website/NotFound';
 import Records from './website/Records';
