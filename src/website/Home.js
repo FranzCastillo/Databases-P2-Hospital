@@ -15,7 +15,6 @@ function Home() {
     
     //Obtener email para mostrarlo en la web
     const fetchEmail = async () => {
-      console.log('aaa')
       const email = (await supabase.auth.getUser()).data.user.email
       setEmail(email);
     };
