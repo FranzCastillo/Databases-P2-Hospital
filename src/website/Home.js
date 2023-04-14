@@ -7,9 +7,15 @@ function Home() {
   const navigate = useNavigate();
   const [email, setEmail] = useState(null);
 
+  function redirectPage() {
+    navigate('/login');
+    supabase.auth.signOut()
+}
+
   //Validación para que no deje entrar a login (pues el usuario ya está loggeado)
   useEffect(() => {
     if (!supabase.auth.getUser()){
+      console.log("AAAA")
       navigate('/login'); 
     }
     
@@ -26,7 +32,7 @@ function Home() {
     <div>
       <h1> Bienvenid@, {email} </h1>
       
-      <button onClick={() => supabase.auth.signOut()}>
+      <button onClick={redirectPage}>
         Cerrar sesión
       </button>
     </div>
