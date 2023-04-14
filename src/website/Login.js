@@ -5,8 +5,9 @@ import {useNavigate} from 'react-router-dom';
 import {supabase} from '../supabase/client';
 
 
-function Login() {
+function LogIn() {
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -17,9 +18,10 @@ function Login() {
                 alert('El campo de entrada está vacío. Por favor, ingrese un valor.');
               }
             else{
-                //Mandar magic link al email
-                await supabase.auth.signInWithOtp ({
+                //Mandar link para ingresar al correo
+                await supabase.auth.signInWithPassword ({
                     email: email,
+                    password: password,
                 });
                 
                 //Select usuarios
@@ -34,12 +36,17 @@ function Login() {
                         email: email, 
                         role: "user"
                     })
+                    alert("Su correo no se encuentra registado.")
                 }
-                alert("Se ha enviado un enlace para ingresar a su correo. Por favor revise su bandeja.")
             }
         } catch (error) {
             console.log(error);
         }
+    }
+
+    function redirectPage() {
+        navigate('/signup');
+
     }
 
     //Validación para que no deje entrar a otra página si no se ha loggeado
@@ -52,8 +59,9 @@ function Login() {
   return (    
     <div>
         <h1> Iniciar Sesión </h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} id='LogInForm'>
             
+            <b> Correo electrónico </b>
             <input 
                 type="email"  
                 name="email" 
@@ -62,13 +70,34 @@ function Login() {
             />
             <br></br>
             <br></br>
-            <button>
+            <b> Contraseña </b>
+            <input 
+                type="password"  
+                name="password"
+                className='password' 
+                placeholder='●●●●●●●●' 
+                onChange = {(e) => setPassword(e.target.value)}
+            />
+            <br></br>
+            <br></br>
+            <button onClick={() => document.getElementById('LogInForm').reset()}>
                 Enviar
             </button>
         </form>
+
+        <form onSubmit={redirectPage}>
+            <br></br>
+            <br></br>
+            <br></br>
+            <h3> ¿No tienes cuenta? </h3>
+            <button onClick={() => document.getElementById('LogInForm').reset()}>
+                Crear Cuenta
+            </button>
+        </form>
+
 
     </div>
   )
 }
 
-export default Login
+export default LogIn

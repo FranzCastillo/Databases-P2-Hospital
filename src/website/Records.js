@@ -39,7 +39,7 @@ function Records() {
       <h2> Seleccione el ID del paciente </h2>
       <form onSubmit={handleSubmit}>
 
-        <select name="id" onChange={handleSelect}>
+        <select  type="text" name="id" onChange={handleSelect}>
           <option value="" disabled selected> Selecciona un ID </option>
           {patients.map((patient, index) => (
           <option key={index} value={patient}>{patient}</option>

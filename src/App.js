@@ -3,7 +3,8 @@ import {Routes, Route, useNavigate, useLocation} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {supabase} from './supabase/client';
 
-import Login from './website/Login';
+import SignUp from './website/SignUp';
+import LogIn from './website/LogIn';
 import Home from './website/Home';
 import NotFound from './website/NotFound';
 import Records from './website/Records';
@@ -20,9 +21,9 @@ function App() {
   useEffect(() => {  
     supabase.auth.onAuthStateChange((event, session) => {
       if (!session) {
-        navigate('/login');
+        //navigate('/login')
       }
-      else if (window.location.pathname === '/login') {
+      else if (window.location.pathname === '/login' || window.location.pathname === '/signup') {
         navigate('/');
       }
       
@@ -49,11 +50,12 @@ function App() {
   //Segunda linea del return: Validacion para el navbar, pues es diferente dependiendo de si es user o admin
   return (
     <div className="App">
-      {userRole && location.pathname !== "/login" && (userRole === 'user' ? <NavBarUser /> : <NavBarAdmin />)}
+      {userRole && location.pathname !== "/signup" && location.pathname !== "/login" && (userRole === 'user' ? <NavBarUser /> : <NavBarAdmin />)}
       <br></br>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<LogIn/>} />
         <Route path="/expedientes" element={<Records />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
