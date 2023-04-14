@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {  
     supabase.auth.onAuthStateChange((event, session) => {
       if (!session) {
-        //navigate('/login')
+        navigate('/login')
       }
       else if (window.location.pathname === '/login' || window.location.pathname === '/signup') {
         navigate('/');

@@ -55,7 +55,7 @@ function SignUp() {
     //Validación para que no deje entrar a otra página si no se ha loggeado
     useEffect(() => {
         if (!supabase.auth.getUser()){
-          
+          navigate('/');
         }
       }, [navigate]);
   
