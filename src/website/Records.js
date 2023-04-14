@@ -71,7 +71,7 @@ function Records() {
                 <br></br>
                 <b> Lugar de atención: </b> <a> {record.nombre_lugar} </a>
                 <br></br>
-                <b> Fecha y hora de atención: </b> <a> {record.nombre_fecha} </a>
+                <b> Fecha y hora de atención: </b> <a> {record.fecha} </a>
                 <br></br>
                 <b> Examen realizado: </b> <a> {record.nombre_examen} </a>
                 <br></br>
