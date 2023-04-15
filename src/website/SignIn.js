@@ -14,6 +14,7 @@ import {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {supabase} from '../supabase/client';
 import {Link} from 'react-router-dom';
+import {setUserEmail} from "./components/UserInfo";
 
 function Copyright(props) {
     return (
@@ -41,13 +42,14 @@ export default function SignIn() {
                 supabase.auth.signInWithPassword({
                     email: email,
                     password: password,
-                }).then(({data, error}) => {
+                }).then(async ({data, error}) => {
                     if (error) {
                         alert(error.message);
                     } else {
-                        navigate('/expedientes');
+                        await setUserEmail(email);
+                        navigate('/home');
                     }
-                });
+                })
             }
         } catch (error) {
             console.log(error);

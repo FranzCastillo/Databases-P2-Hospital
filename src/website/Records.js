@@ -1,6 +1,8 @@
 import React from 'react';
 import {useEffect, useState} from 'react';
 import {supabase} from '../supabase/client';
+import NavBarUser from "./components/NavBarUser";
+import {user} from "./components/UserInfo";
 
 function Records() {
     const [ID, setID] = useState(null);
@@ -36,7 +38,8 @@ function Records() {
 
     return (
         <div>
-
+            {/*If the user role is user, show user navbar*/}
+            <NavBarUser/>
             <h2> Seleccione el ID del paciente </h2>
             <form onSubmit={handleSubmit}>
 

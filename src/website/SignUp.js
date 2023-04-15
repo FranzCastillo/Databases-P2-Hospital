@@ -14,7 +14,7 @@ import {useNavigate} from "react-router-dom";
 import {supabase} from "../supabase/client";
 import {Link} from 'react-router-dom';
 import Autocomplete from '@mui/material/Autocomplete';
-import {setUser, user} from "./components/UserInfo";
+import {getUser, setUser, user} from "./components/UserInfo";
 
 function Copyright(props) {
     return (
@@ -60,12 +60,7 @@ export default function SignUp() {
                 });
 
             // Sets the user information in /components/UserInfo.js
-            const medic = await supabase
-                .from("medicos")
-                .select("*")
-                .eq('num_colegiado', colegiate_number);
-            setUser(medic.data[0]);
-            setUser({place: place.id, specialty: specialty.id});
+            const user = getUser();
 
             await supabase
                 .from("especializados")
@@ -263,7 +258,7 @@ export default function SignUp() {
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link to="/login" variant="body2">
+                                <Link to="/signin" variant="body2">
                                     {"¿Ya tienes una cuenta? Inicia sesión"}
                                 </Link>
                             </Grid>

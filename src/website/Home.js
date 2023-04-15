@@ -2,10 +2,14 @@ import React from 'react';
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {supabase} from '../supabase/client';
+import NavBarUser from "./components/NavBarUser";
+import {getUser} from "./components/UserInfo";
+import NavBarAdmin from "./components/NavBarAdmin";
 
 function Home() {
     const navigate = useNavigate();
     const [email, setEmail] = useState(null);
+    const user = getUser();
 
     function redirectPage() {
         navigate('/login');
@@ -16,7 +20,7 @@ function Home() {
     useEffect(() => {
         if (!supabase.auth.getUser()) {
             console.log("AAAA")
-            navigate('/login');
+            navigate('/signin');
         }
 
         //Obtener email para mostrarlo en la web
@@ -30,6 +34,7 @@ function Home() {
 
     return (
         <div>
+            {user.role === "admin" ? <NavBarUser/> : <NavBarAdmin/>}
             <h1> Bienvenid@, {email} </h1>
 
             <button onClick={redirectPage}>

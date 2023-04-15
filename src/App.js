@@ -6,7 +6,6 @@ import SignUp from "./website/SignUp";
 import SignIn from "./website/SignIn";
 import Records from "./website/Records";
 import NotFound from "./website/NotFound";
-import {useNavigate} from 'react-router-dom';
 import {supabase} from './supabase/client';
 
 
@@ -32,15 +31,16 @@ export default function App() {
             <Routes>
                 <Route path="*" element={<SignIn/>}/>
                 <Route path="/signup" element={<SignUp/>}/>
-                <Route path="/login" element={<SignIn/>}/>
+                <Route path="/signin" element={<SignIn/>}/>
             </Routes>
         </div>)
     } else {
         return (<div className="App">
             <Routes>
                 <Route path="/" element={<Home/>}/>
+                <Route path="/home" element={<Home/>}/>
                 <Route path="/signup" element={<SignUp/>}/>
-                <Route path="/login" element={<SignIn/>}/>
+                <Route path="/signin" element={<SignIn/>}/>
                 <Route path="/expedientes" element={<Records/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>
