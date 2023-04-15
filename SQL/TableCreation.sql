@@ -1,18 +1,3 @@
-CREATE TABLE IF NOT EXISTS bitacora (
-    id SERIAL PRIMARY KEY,
-    tabla VARCHAR(50),
-    accion VARCHAR(10),
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    valores_viejos JSON,
-    valores_nuevos JSON
-);
-
-CREATE TABLE IF NOT EXISTS usuarios(
-	id SERIAL PRIMARY KEY,
-	email VARCHAR(50) NOT NULL,
-	rol VARCHAR(50) NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS pacientes(
 	id SERIAL PRIMARY KEY,
 	nombre VARCHAR(50) NOT NULL,
@@ -28,12 +13,13 @@ CREATE INDEX IF NOT EXISTS idx_pacientes_id ON pacientes(id);
 
 CREATE TABLE IF NOT EXISTS medicos(
 	id SERIAL PRIMARY KEY,
-	usuario_id INTEGER REFERENCES usuarios,
-	nombre VARCHAR(50) NOT NULL,
+	nombres VARCHAR(50) NOT NULL,
 	apellidos VARCHAR(50) NOT NULL,
 	telefono VARCHAR(15) DEFAULT '-',
 	direccion VARCHAR(100) DEFAULT '-',
-	num_colegiado VARCHAR(25) NOT NULL
+	num_colegiado VARCHAR(25) NOT NULL,
+	correo VARCHAR(50) DEFAULT '-',
+	rol VARCHAR(25) DEFAULT 'user'
 );
 
 CREATE INDEX IF NOT EXISTS idx_medicos_id ON medicos(id);
@@ -70,9 +56,7 @@ CREATE INDEX IF NOT EXISTS idx_lugares_id ON lugares(id);
 
 CREATE TABLE IF NOT EXISTS trabajos(
 	medico_id INTEGER references medicos,
-	lugar_id INTEGER references lugares,
-	fecha_inicio timestamp DEFAULT CURRENT_TIMESTAMP ,
-	fecha_final timestamp DEFAULT NULL
+	lugar_id INTEGER references lugares
 );
 
 CREATE TABLE IF NOT EXISTS insumos(
@@ -80,17 +64,7 @@ CREATE TABLE IF NOT EXISTS insumos(
 	nombre varchar(25) default '-',
 	tipo varchar(10) default 'Insumos'
 );
-CREATE INDEX IF NOT EXISTS idx_insumos_id ON insumos(id);
--- The insumos tables contains names of medicines
 
-
-CREATE TABLE IF NOT EXISTS insumos_del_lugar(
-    lugar_id INTEGER REFERENCES lugares,
-    material_id INTEGER REFERENCES insumos,
-    cantidad_actual INTEGER DEFAULT 0,
-    cantidad_inicial INTEGER DEFAULT 0
-);
-CREATE INDEX IF NOT EXISTS idx_insumos_del_lugar ON insumos_del_lugar(lugar_id, material_id);
 
 CREATE TABLE IF NOT EXISTS tratamientos(
     id SERIAL PRIMARY KEY,
@@ -108,7 +82,6 @@ CREATE TABLE IF NOT EXISTS enfermedades(
     id SERIAL PRIMARY KEY,
     nombre varchar(50) NOT NULL
 );
-
 
 
 CREATE TABLE IF NOT EXISTS enfermedades_heredadas(
@@ -155,3 +128,13 @@ CREATE TABLE IF NOT EXISTS medicos_tratantes(
     medico_id INTEGER REFERENCES medicos
 );
 CREATE INDEX IF NOT EXISTS idx_medicos_tratantes ON medicos_tratantes(consulta_id, medico_id);
+
+CREATE TABLE IF NOT EXISTS bitacora (
+    id SERIAL PRIMARY KEY,
+    medico_id INTEGER REFERENCES medicos,
+    tabla VARCHAR(50),
+    accion VARCHAR(10),
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    valores_viejos JSON,
+    valores_nuevos JSON
+);
