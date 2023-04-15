@@ -2,7 +2,9 @@ import React from 'react';
 import {useEffect, useState} from 'react';
 import {supabase} from '../supabase/client';
 import NavBarUser from "./components/NavBarUser";
-import {user} from "./components/UserInfo";
+import NavBarAdmin from "./components/NavBarAdmin";
+import {getUser} from "./components/UserInfo";
+
 
 function Records() {
     const [ID, setID] = useState(null);
@@ -14,6 +16,7 @@ function Records() {
         setID(e.target.value);
         console.log(e.target.value)
     };
+
 
     //Al darle click al boton:
     const handleSubmit = async (e) => {
@@ -35,11 +38,11 @@ function Records() {
         getPatients();
 
     }, []);
-
+    const user = getUser();
     return (
         <div>
             {/*If the user role is user, show user navbar*/}
-            <NavBarUser/>
+            {user.role === "admin" ? <NavBarUser/> : <NavBarAdmin/>}
             <h2> Seleccione el ID del paciente </h2>
             <form onSubmit={handleSubmit}>
 

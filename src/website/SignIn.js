@@ -15,6 +15,9 @@ import {useNavigate} from 'react-router-dom';
 import {supabase} from '../supabase/client';
 import {Link} from 'react-router-dom';
 import {setUserEmail} from "./components/UserInfo";
+import NavBarUser from "./components/NavBarUser";
+import NavBarAdmin from "./components/NavBarAdmin";
+import {getUser} from "./components/UserInfo";
 
 function Copyright(props) {
     return (
