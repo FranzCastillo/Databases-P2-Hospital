@@ -105,10 +105,10 @@ export default function SignIn() {
                         >
                             Ingresar
                         </Button>
-                        <Grid container>
+                        <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <Link to="/signup" variant="body2">
-                                    {"Don't have an account? Sign Up"}
+                                    {"¿No tienes una cuenta? Regístrate"}
                                 </Link>
                             </Grid>
                         </Grid>

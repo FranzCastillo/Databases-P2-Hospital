@@ -1,4 +1,4 @@
-const { createClient } = require("@supabase/supabase-js");
+const {createClient} = require("@supabase/supabase-js");
 
 const supabaseUrl = process.env.REACT_APP_DB_URL;
 const supabaseKey = process.env.REACT_APP_DB_KEY;
