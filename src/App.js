@@ -3,12 +3,13 @@ import {Routes, Route, useNavigate, useLocation} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import {supabase} from './supabase/client';
 
-import SignUp from './website/SignUp';
-import LogIn from './website/Login';
 import Home from './website/Home';
+import SignIn from "./website/SignIn";
+import SignUp from "./website/SignUp";
 import NotFound from './website/NotFound';
 import Records from './website/Records';
 
+import './website/SignIn';
 import NavBarAdmin from './website/components/NavBarAdmin';
 import NavBarUser from './website/components/NavBarUser';
 
@@ -21,7 +22,7 @@ function App() {
   useEffect(() => {  
     supabase.auth.onAuthStateChange((event, session) => {
       if (!session) {
-        //navigate('/login')
+         // navigate('/login')
       }
       else if (window.location.pathname === '/login' || window.location.pathname === '/signup') {
         navigate('/');
@@ -55,7 +56,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<LogIn/>} />
+        <Route path="/login" element={<SignIn/>} />
         <Route path="/expedientes" element={<Records />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

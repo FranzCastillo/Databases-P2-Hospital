@@ -1,106 +1,142 @@
-import React from 'react';
-import {useState} from 'react';
-import {useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {supabase} from '../supabase/client';
+import * as React from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {supabase} from "../supabase/client";
 
+function Copyright(props) {
+    return (
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+            {'Copyright © '}
+            <Link color="inherit" href="https://mui.com/">
+                Care Connect
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
 
-function SignUp() {
+const theme = createTheme();
+
+export default function SignUp() {
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = (event) => {
+        event.preventDefault();
         try {
-            //Validacion campo vacio
-            if (email.trim() === '') {
-                alert('El campo de entrada está vacío. Por favor, ingrese un valor.');
-              }
-            else{
-                //Mandar link para ingresar al correo
-                await supabase.auth.signUp ({
+            if ((email.trim() !== '') || (password !== '')) {
+                supabase.auth.signUp({
                     email: email,
                     password: password,
+                }).then(({data, error}) => {
+                    if (error) {
+                        alert(error.message);
+                    } else {
+                        navigate('/expedientes');
+                    }
                 });
-                
-                //Select usuarios
-                const {data} = await supabase
-                .from("usuarios")
-                .select("*")
-                .eq('email', email);
-                
-                //Validacion, si el email no existe se ingresa, de lo contrario, no
-                if (data.length === 0){
-                    await supabase.from("usuarios").insert({
-                        email: email, 
-                        role: "user"
-                    })
-                    alert("Se ha enviado un enlace a su correo electrónico para acceder a su cuenta. Por favor, revise su bandeja de entrada.")
-                }
-                else{
-                    alert("El correo electrónico ingresado ya está en uso.")
-                }
             }
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
-    function redirectPage() {
-        navigate('/login');
-        
-    }
-
-    //Validación para que no deje entrar a otra página si no se ha loggeado
-    useEffect(() => {
-        if (!supabase.auth.getUser()){
-          navigate('/');
-        }
-      }, [navigate]);
-  
-  return (    
-    <div>
-        <h1> Crear Cuenta </h1>
-        <form onSubmit={handleSubmit} id='SignUpForm'>
-            
-            <b> Correo electrónico </b>
-            <input 
-                type="email"  
-                name="email" 
-                placeholder='tucorreo@correo.com' 
-                onChange = {(e) => setEmail(e.target.value)}
-            />
-            <br></br>
-            <br></br>
-            <b> Contraseña </b>
-            <input 
-                type="password"  
-                name="password"
-                className='password' 
-                placeholder='●●●●●●●●' 
-                onChange = {(e) => setPassword(e.target.value)}
-            />
-            <br></br>
-            <br></br>
-            <button onClick={() => document.getElementById('SignUpForm').reset()}>
-                Enviar
-            </button>
-        </form>
-
-        <form onSubmit={redirectPage}>
-            <br></br>
-            <br></br>
-            <br></br>
-            <h3> ¿Ya tienes cuenta? </h3>
-            <button onClick={() => document.getElementById('SignUpForm').reset()}>
-                Iniciar Sesión
-            </button>
-        </form>
-
-
-    </div>
-  )
+    return (
+        <ThemeProvider theme={theme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline/>
+                <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+                        <LockOutlinedIcon/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
+                        Registrarse
+                    </Typography>
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 3}}>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    autoComplete="given-name"
+                                    name="firstName"
+                                    required
+                                    fullWidth
+                                    id="firstName"
+                                    label="Nombres"
+                                    autoFocus
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    id="lastName"
+                                    label="Apellidos"
+                                    name="lastName"
+                                    autoComplete="family-name"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Correo Electrónico"
+                                    name="email"
+                                    autoComplete="email"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Contraseña"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="new-password"
+                                />
+                            </Grid>
+                        </Grid>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{mt: 3, mb: 2}}
+                        >
+                            Registrarse
+                        </Button>
+                        <Grid container justifyContent="flex-end">
+                            <Grid item>
+                                <Link href="#" variant="body2">
+                                    ¿Ya tienes una cuenta? Inicia sesión
+                                </Link>
+                            </Grid>
+                        </Grid>
+                    </Box>
+                </Box>
+                <Copyright sx={{mt: 5}}/>
+            </Container>
+        </ThemeProvider>
+    );
 }
-
-export default SignUp

@@ -1,10 +1,3 @@
-CREATE TABLE IF NOT EXISTS usuarios(
-	id SERIAL PRIMARY KEY,
-	email VARCHAR(50) UNIQUE NOT NULL,
-	role VARCHAR(100) NOT NULL
-);
-CREATE INDEX IF NOT EXISTS idx_usuarios_username ON usuarios(email);
-
 CREATE TABLE IF NOT EXISTS bitacora (
     id SERIAL PRIMARY KEY,
     usuario_id INTEGER REFERENCES usuarios,
@@ -61,28 +54,23 @@ CREATE TABLE IF NOT EXISTS especializados(
 );
 CREATE INDEX IF NOT EXISTS idx_especializados_id ON especializados(medico_id);
 
--- Source: https://www.html-code-generator.com/mysql/country-name-table
-CREATE TABLE IF NOT EXISTS continentes(
-	codigo varchar(2) PRIMARY KEY,
-	nombre varchar(30) DEFAULT '-'
-);
-
-CREATE TABLE IF NOT EXISTS paises(
+CREATE TABLE IF NOT EXISTS departamentos(
 	id SERIAL PRIMARY KEY,
-	codigo varchar(2) DEFAULT '-',
-	nombre varchar(100) DEFAULT '-',
-	continente_codigo VARCHAR(2) REFERENCES continentes(codigo),
-	alfa_3 VARCHAR(3) DEFAULT '-'
+	nombre varchar(50) NOT NULL
 );
-CREATE INDEX IF NOT EXISTS idx_paises_id ON paises(id);
+-- The departamentos table contains the names of the departments in Guatemala
+
 
 CREATE TABLE IF NOT EXISTS lugares(
 	id SERIAL PRIMARY KEY,
 	nombre varchar(50) NOT NULL,
 	direccion varchar(250) DEFAULT '-',
-	pais_id INTEGER REFERENCES paises
+	tipo varchar(10) DEFAULT 'Hospital',
+	departamento_id INTEGER REFERENCES departamentos
 );
 CREATE INDEX IF NOT EXISTS idx_lugares_id ON lugares(id);
+-- The lugares table contains the names of the hospitals in Guatemala
+
 
 CREATE TABLE IF NOT EXISTS trabajos(
 	medico_id INTEGER references medicos,
@@ -91,18 +79,20 @@ CREATE TABLE IF NOT EXISTS trabajos(
 	fecha_final timestamp DEFAULT NULL
 );
 
-CREATE TABLE IF NOT EXISTS materiales(
+CREATE TABLE IF NOT EXISTS insumos(
 	id SERIAL PRIMARY KEY,
 	nombre varchar(25) default '-',
 	tipo varchar(10) default 'Materiales'
 );
 CREATE INDEX IF NOT EXISTS idx_materiales_id ON materiales(id);
+-- The insumos tables contains names of medicines
+
 
 CREATE TABLE IF NOT EXISTS materiales_del_lugar(
     lugar_id INTEGER REFERENCES lugares,
     material_id INTEGER REFERENCES materiales,
-    cantidad INTEGER DEFAULT 0,
-    cantidad_referencia INTEGER DEFAULT 0
+    cantidad_actual INTEGER DEFAULT 0,
+    cantidad_inicial INTEGER DEFAULT 0
 );
 CREATE INDEX IF NOT EXISTS idx_materiales_del_lugar ON materiales_del_lugar(lugar_id, material_id);
 
@@ -122,6 +112,8 @@ CREATE TABLE IF NOT EXISTS enfermedades(
     id SERIAL PRIMARY KEY,
     nombre varchar(50) NOT NULL
 );
+
+
 
 CREATE TABLE IF NOT EXISTS enfermedades_heredadas(
     paciente_id INTEGER REFERENCES pacientes,

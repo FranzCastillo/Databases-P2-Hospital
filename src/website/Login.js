@@ -46,7 +46,6 @@ function LogIn() {
 
     function redirectPage() {
         navigate('/signup');
-
     }
 
     //Validación para que no deje entrar a otra página si no se ha loggeado
@@ -81,7 +80,7 @@ function LogIn() {
             <br></br>
             <br></br>
             <button onClick={() => document.getElementById('LogInForm').reset()}>
-                Enviar
+                Iniciar Sesión
             </button>
         </form>
 
