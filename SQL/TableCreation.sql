@@ -1,6 +1,5 @@
 CREATE TABLE IF NOT EXISTS bitacora (
     id SERIAL PRIMARY KEY,
-    usuario_id INTEGER REFERENCES usuarios,
     tabla VARCHAR(50),
     accion VARCHAR(10),
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -8,18 +7,14 @@ CREATE TABLE IF NOT EXISTS bitacora (
     valores_nuevos JSON
 );
 
-CREATE TABLE IF NOT EXISTS admins(
+CREATE TABLE IF NOT EXISTS usuarios(
 	id SERIAL PRIMARY KEY,
-	usuario_id INTEGER REFERENCES usuarios,
-	nombre VARCHAR(50) NOT NULL,
-	apellidos VARCHAR(50) NOT NULL,
-	telefono VARCHAR(15) DEFAULT '-',
-	direccion VARCHAR(100) DEFAULT '-'
+	email VARCHAR(50) NOT NULL,
+	rol VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS pacientes(
 	id SERIAL PRIMARY KEY,
-	usuario_id INTEGER REFERENCES usuarios,
 	nombre VARCHAR(50) NOT NULL,
 	apellidos VARCHAR(50) NOT NULL,
 	telefono VARCHAR(15) DEFAULT '-',
@@ -40,6 +35,7 @@ CREATE TABLE IF NOT EXISTS medicos(
 	direccion VARCHAR(100) DEFAULT '-',
 	num_colegiado VARCHAR(25) NOT NULL
 );
+
 CREATE INDEX IF NOT EXISTS idx_medicos_id ON medicos(id);
 
 CREATE TABLE IF NOT EXISTS especialidades(
@@ -82,19 +78,19 @@ CREATE TABLE IF NOT EXISTS trabajos(
 CREATE TABLE IF NOT EXISTS insumos(
 	id SERIAL PRIMARY KEY,
 	nombre varchar(25) default '-',
-	tipo varchar(10) default 'Materiales'
+	tipo varchar(10) default 'Insumos'
 );
-CREATE INDEX IF NOT EXISTS idx_materiales_id ON materiales(id);
+CREATE INDEX IF NOT EXISTS idx_insumos_id ON insumos(id);
 -- The insumos tables contains names of medicines
 
 
-CREATE TABLE IF NOT EXISTS materiales_del_lugar(
+CREATE TABLE IF NOT EXISTS insumos_del_lugar(
     lugar_id INTEGER REFERENCES lugares,
-    material_id INTEGER REFERENCES materiales,
+    material_id INTEGER REFERENCES insumos,
     cantidad_actual INTEGER DEFAULT 0,
     cantidad_inicial INTEGER DEFAULT 0
 );
-CREATE INDEX IF NOT EXISTS idx_materiales_del_lugar ON materiales_del_lugar(lugar_id, material_id);
+CREATE INDEX IF NOT EXISTS idx_insumos_del_lugar ON insumos_del_lugar(lugar_id, material_id);
 
 CREATE TABLE IF NOT EXISTS tratamientos(
     id SERIAL PRIMARY KEY,
