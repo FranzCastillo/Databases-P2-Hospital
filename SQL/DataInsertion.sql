@@ -75,4 +75,4 @@ INSERT INTO enfermedades(nombre) VALUES('Glaucoma');
 INSERT INTO enfermedades(nombre) VALUES('Retinopatía diabética');
 INSERT INTO enfermedades(nombre) VALUES('Insuficiencia Renal');
 
-INSERT INTO status(status) VALUES('Murio'), ('Sigue enfermo'), ('Recuperado');
+INSERT INTO status(status) VALUES('Fallecido'), ('Enfermo'), ('Recuperado');

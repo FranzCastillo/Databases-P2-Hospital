@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS medicos(
 	correo VARCHAR(50) DEFAULT '-',
 	rol VARCHAR(25) DEFAULT 'user'
 );
+
 CREATE INDEX IF NOT EXISTS idx_medicos_id ON medicos(id);
 
 CREATE TABLE IF NOT EXISTS especialidades(
@@ -61,18 +62,9 @@ CREATE TABLE IF NOT EXISTS trabajos(
 CREATE TABLE IF NOT EXISTS insumos(
 	id SERIAL PRIMARY KEY,
 	nombre varchar(25) default '-',
-	tipo varchar(10) default 'Materiales'
+	tipo varchar(10) default 'Insumos'
 );
-CREATE INDEX IF NOT EXISTS idx_insumos_id ON insumos(id);
 
-
-CREATE TABLE IF NOT EXISTS insumos_del_lugar(
-    lugar_id INTEGER REFERENCES lugares,
-    insumo_id INTEGER REFERENCES insumos,
-    cantidad_actual INTEGER DEFAULT 0,
-    cantidad_inicial INTEGER DEFAULT 0
-);
-CREATE INDEX IF NOT EXISTS insumos_del_lugar_idx ON insumos_del_lugar(lugar_id, insumo_id);
 
 CREATE TABLE IF NOT EXISTS tratamientos(
     id SERIAL PRIMARY KEY,
