@@ -1,18 +1,20 @@
-import './index.css'
-import {useState, useEffect} from 'react'
-import {Route, Routes} from "react-router-dom";
-import Home from "./website/Home";
-import SignUp from "./website/SignUp";
-import SignIn from "./website/SignIn";
-import Records from "./website/Records";
-import NotFound from "./website/NotFound";
-import {useNavigate} from 'react-router-dom';
+import './App.css';
+import {Routes, Route, useNavigate, useLocation} from 'react-router-dom';
+import {useEffect, useState} from 'react';
 import {supabase} from './supabase/client';
 
+import Home from './website/Home';
+import SignIn from "./website/SignIn";
+import SignUp from "./website/SignUp";
+import NotFound from './website/NotFound';
+import Records from './website/Records';
 
-export default function App() {
+import './website/SignIn';
+import NavBarAdmin from './website/components/NavBarAdmin';
+import NavBarUser from './website/components/NavBarUser';
+
+function App() {
     const [session, setSession] = useState(null)
-
     useEffect(() => {
         supabase.auth.getSession().then(({data: {session}}) => {
             setSession(session)
@@ -28,15 +30,10 @@ export default function App() {
     }, [])
 
     if (!session) {
-        return (<div className="App">
-            <Routes>
-                <Route path="*" element={<SignIn/>}/>
-                <Route path="/signup" element={<SignUp/>}/>
-                <Route path="/login" element={<SignIn/>}/>
-            </Routes>
-        </div>)
+        return (<div><h1>???</h1></div>);
     } else {
         return (<div className="App">
+
             <Routes>
                 <Route path="/" element={<Home/>}/>
                 <Route path="/signup" element={<SignUp/>}/>
@@ -46,4 +43,8 @@ export default function App() {
             </Routes>
         </div>)
     }
+
+
 }
+
+export default App;
