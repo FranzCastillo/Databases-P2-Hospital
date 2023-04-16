@@ -130,8 +130,6 @@ function NewRecord() {
                 .order("id", {ascending: false})
                 .limit(1);
 
-            console.log("Diseases");
-            console.log(userDiseases);
             for (const disease of userDiseases) {
                 await supabase
                     .from("enfermedades_diagnosticadas")
@@ -140,8 +138,6 @@ function NewRecord() {
                         enfermedad_id: disease.id,
                     });
             }
-            console.log("Exams");
-            console.log(userExams);
             for (const exam of userExams) {
                 await supabase
                     .from("examenes_aplicados")
@@ -150,8 +146,6 @@ function NewRecord() {
                         examen_id: exam.id,
                     });
             }
-            console.log("Treatments");
-            console.log(userTreatments);
             for(const treatment of userTreatments){
                 await supabase
                     .from("tratamientos_aplicados")
@@ -161,15 +155,15 @@ function NewRecord() {
                     });
             }
 
-            console.log("User");
             const user = await getUser();
-            console.log(user);
-            // await supabase
-            //     .from("medicos_tratantes")
-            //     .insert({
-            //         consulta_id: consulta_id.data[0].id,
-            //         medico_id: user.id,
-            //     });
+            await supabase
+                .from("medicos_tratantes")
+                .insert({
+                    consulta_id: consulta_id.data[0].id,
+                    medico_id: user.id,
+                });
+            alert("Consulta creada con éxito!");
+            navigate('/expedientes/' + patient.id);
         } catch (error) {
             console.log(error);
         }
