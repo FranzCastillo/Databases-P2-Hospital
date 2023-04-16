@@ -14,6 +14,7 @@ import Reports from "./website/Reports";
 import NewRecord from "./website/NewRecord";
 import NewPatient from "./website/NewPatient";
 import SignOut from "./website/SignOut";
+import ShowRecord from "./website/ShowRecord";
 
 
 export default function App() {
@@ -53,7 +54,7 @@ export default function App() {
                 <Route path="/bitacora" element={<Logs/>}/>
                 <Route path="/reportes" element={<Reports/>}/>
                 <Route path="/expedientes/nuevo" element={<NewRecord/>}/>
-                {/*<Route path="/expedientes/:id" element={<ShowRecord/>}/>*/}
+                <Route path="/expedientes/:id" element={<ShowRecord/>}/>
                 <Route path="patient/new" element={<NewPatient/>}/>
                 <Route path={"/signout"} element={<SignOut/>}/>
                 <Route path="*" element={<NotFound/>}/>
