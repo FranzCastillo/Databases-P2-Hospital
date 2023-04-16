@@ -147,12 +147,31 @@ CREATE TABLE IF NOT EXISTS medicos_tratantes(
 
 CREATE INDEX IF NOT EXISTS idx_medicos_tratantes ON medicos_tratantes(consulta_id, medico_id);
 
-CREATE TABLE IF NOT EXISTS bitacora (
-    id SERIAL PRIMARY KEY,
-    medico_id INTEGER REFERENCES medicos,
-    tabla VARCHAR(50),
-    accion VARCHAR(10),
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    valores_viejos JSON,
-    valores_nuevos JSON
+
+CREATE TABLE IF NOT EXISTS bitacora_consultas (
+  id SERIAL PRIMARY KEY,
+  id_doctor INTEGER REFERENCES medicos,
+  id_consultas INTEGER REFERENCES consultas,
+  paciente_id_consulta INT,
+  lugar_id_consulta INT,
+  fecha_consulta TIMESTAMP,
+  observaciones_consulta TEXT,
+  status_id_consulta INT
 );
+
+CREATE TABLE IF NOT EXISTS bitacora_medicos (
+  id SERIAL PRIMARY  KEY,
+  id_doctor INTEGER REFERENCES medicos,
+  nombres varchar(50),
+  apellidos varchar(50),
+  teléfono varchar(15),
+  dirección varchar(100),
+  num_colegiado_medicos varchar(25),
+  correo_medicos varchar(50),
+  rol_medicos varchar(25)
+);
+
+--tablas modificadas para el funcionamiento de la bitacora
+DROP TABLE bitacora;
+ALTER TABLE consultas ADD id_medico INTEGER;
+ALTER TABLE consultas ADD CONSTRAINT fk_id_medico FOREIGN KEY (id_medico) REFERENCES medicos (id);
