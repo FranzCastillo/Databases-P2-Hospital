@@ -4,13 +4,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useNavigate} from "react-router-dom";
 import {supabase} from "../supabase/client";
-import {Link} from 'react-router-dom';
 import Autocomplete from '@mui/material/Autocomplete';
 import {getUser} from "./components/UserInfo";
 import React, {useState, useEffect} from 'react'
@@ -146,7 +144,7 @@ function NewRecord() {
                         examen_id: exam.id,
                     });
             }
-            for(const treatment of userTreatments){
+            for (const treatment of userTreatments) {
                 await supabase
                     .from("tratamientos_aplicados")
                     .insert({
@@ -155,7 +153,6 @@ function NewRecord() {
                     });
             }
 
-            const user = await getUser();
             await supabase
                 .from("medicos_tratantes")
                 .insert({
@@ -281,6 +278,9 @@ function NewRecord() {
                                         label="Observaciones"
                                         name="observations"
                                         autoFocus
+                                        multiline={true}
+                                        minRows={2}
+                                        maxRows={3}
                                         value={observations}
                                         onChange={(e) => setObservations(e.target.value)}
                                     />

@@ -11,9 +11,9 @@ function Home() {
     const [email, setEmail] = useState(null);
     const user = getUser();
 
-    function redirectPage() {
+    async function redirectPage() {
+        await supabase.auth.signOut();
         navigate('/login');
-        supabase.auth.signOut()
     }
 
     //Validación para que no deje entrar a login (pues el usuario ya está loggeado)

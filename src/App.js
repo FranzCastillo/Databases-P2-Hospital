@@ -12,6 +12,7 @@ import Medics from "./website/Medics";
 import Logs from "./website/Logs";
 import Reports from "./website/Reports";
 import NewRecord from "./website/NewRecord";
+import NewPatient from "./website/NewPatient";
 
 
 export default function App() {
@@ -50,6 +51,8 @@ export default function App() {
                 <Route path="/bitacora" element={<Logs/>}/>
                 <Route path="/reportes" element={<Reports/>}/>
                 <Route path="/expedientes/nuevo" element={<NewRecord/>}/>
+                {/*<Route path="/expedientes/:id" element={<ShowRecord/>}/>*/}
+                <Route path="patient/new" element={<NewPatient/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>
         </div>)
