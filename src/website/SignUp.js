@@ -15,8 +15,6 @@ import {supabase} from "../supabase/client";
 import {Link} from 'react-router-dom';
 import Autocomplete from '@mui/material/Autocomplete';
 import {getUser, setUser, user} from "./components/UserInfo";
-import NavBarUser from "./components/NavBarUser";
-import NavBarAdmin from "./components/NavBarAdmin";
 
 function Copyright(props) {
     return (
