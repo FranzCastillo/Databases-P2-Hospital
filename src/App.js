@@ -13,6 +13,7 @@ import Logs from "./website/Logs";
 import Reports from "./website/Reports";
 import NewRecord from "./website/NewRecord";
 import NewPatient from "./website/NewPatient";
+import SignOut from "./website/SignOut";
 
 
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
     if (!session) {
         return (<div className="App">
             <Routes>
+                <Route path="/" element={<SignIn/>}/>
                 <Route path="*" element={<SignIn/>}/>
                 <Route path="/signup" element={<SignUp/>}/>
                 <Route path="/signin" element={<SignIn/>}/>
@@ -53,6 +55,7 @@ export default function App() {
                 <Route path="/expedientes/nuevo" element={<NewRecord/>}/>
                 {/*<Route path="/expedientes/:id" element={<ShowRecord/>}/>*/}
                 <Route path="patient/new" element={<NewPatient/>}/>
+                <Route path={"/signout"} element={<SignOut/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>
         </div>)

@@ -9,10 +9,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {supabase} from "../supabase/client";
 import {Link} from 'react-router-dom';
+import Autocomplete from "@mui/material/Autocomplete";
 
 const theme = createTheme();
 
@@ -25,8 +26,24 @@ export default function SignUp() {
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
     const [adictions, setAdictions] = useState('');
+    const [diseases, setDiseases] = useState([]);
+    const [userDiseases, setUserDiseases] = useState([]);
+
+
     const navigate = useNavigate();
 
+    useEffect(() => {
+        supabase.from('enfermedades').select('id, nombre').then(({data, error}) => {
+            data.forEach((disease) => {
+                disease.label = disease.nombre;
+            });
+            if (error) {
+                alert(error.message);
+            } else {
+                setDiseases(data);
+            }
+        });
+    }, []);
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -42,6 +59,20 @@ export default function SignUp() {
                     peso_en_kg: weight,
                     adicciones: adictions
                 });
+            // Gets the id of the patient recently created
+            const patientId = await supabase
+                .from("pacientes")
+                .select("id")
+                .order("id", {ascending: false})
+                .limit(1);
+            await supabase
+                .from("enfermedades_heredadas")
+                .insert(userDiseases.map((disease) => {
+                    return {
+                        paciente_id: patientId.data[0].id,
+                        enfermedad_id: disease.id
+                    }
+                } ));
             alert("Paciente creado con éxito!")
             navigate('/expedientes/nuevo');
 
@@ -160,6 +191,20 @@ export default function SignUp() {
                                     autoFocus
                                     value={adictions}
                                     onChange={(e) => setAdictions(e.target.value)}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Autocomplete
+                                    multiple
+                                    limitTags={2}
+                                    id="multiple-limit-diseases"
+                                    options={diseases}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Enfermedades Heredadas"
+                                                   placeholder="Enfermedades"/>
+                                    )}
+                                    sx={{width: '500px'}}
+                                    onChange={(event, value) => setUserDiseases(value)}
                                 />
                             </Grid>
                         </Grid>
