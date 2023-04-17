@@ -35,11 +35,16 @@ function NewInput() {
     const [inputID, setInputID] = useState([]);
     const [initialNumber, setInitialNumber] = useState([]);
     const [actualNumber, setActualNumber] = useState([]);
+    // To load the right navbar
     const [rol, setRol] = useState([]);
-    user.then(objeto => {
-        setRol(objeto["rol"]);
-        console.log(rol); // "admin"
-    });
+    const [userLoaded, setUserLoaded] = useState(false);
+    useEffect(() => {
+        getUser().then(objeto => {
+            setRol(objeto["rol"]);
+            setUserLoaded(true);
+        });
+    }, []);
+
 
     //Al darle click al boton:
     const handleSubmit = async (e) => {
@@ -76,7 +81,7 @@ function NewInput() {
 
         getOptions2();
 
-    }, []);
+    }, [userLoaded]);
 
   return (
     <div>

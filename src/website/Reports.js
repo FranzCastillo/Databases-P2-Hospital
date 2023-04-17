@@ -6,11 +6,15 @@ import {useEffect, useState} from 'react';
 
 function Reports() {
     const user = getUser();
+    // To load the right navbar
     const [rol, setRol] = useState([]);
-    user.then(objeto => {
-        setRol(objeto["rol"]);
-        console.log(rol); // "admin"
-    });
+    const [userLoaded, setUserLoaded] = useState(false);
+    useEffect(() => {
+        getUser().then(objeto => {
+            setRol(objeto["rol"]);
+            setUserLoaded(true);
+        });
+    }, []);
     return (
         <div>
             {rol === "admin" ? <NavBarAdmin/> : <NavBarUser/>}

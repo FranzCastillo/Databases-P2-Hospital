@@ -31,12 +31,17 @@ function Inventory() {
     const [options, setOptions] = useState([]);
     const [place, setPlace] = useState([]);
     const [id, setID] = useState([]);
+    // To load the right navbar
     const [rol, setRol] = useState([]);
-    user.then(objeto => {
-        setRol(objeto["rol"]);
-        console.log(rol); // "admin"
-    });
-    
+    const [userLoaded, setUserLoaded] = useState(false);
+    useEffect(() => {
+        getUser().then(objeto => {
+            setRol(objeto["rol"]);
+            setUserLoaded(true);
+        });
+    }, []);
+
+
     //Al darle click al boton:
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -69,7 +74,7 @@ function Inventory() {
 
         getOptions();
 
-    }, [id]);
+    }, [id, userLoaded]);
 
     return (
         <div>

@@ -29,11 +29,15 @@ function ShowInventory() {
     //const navigate = useNavigate();
     const [inputs, setInputs] = useState([]);
     const [place, setPlace] = useState([]);
+    // To load the right navbar
     const [rol, setRol] = useState([]);
-    user.then(objeto => {
-        setRol(objeto["rol"]);
-        console.log(rol); // "admin"
-    });
+    const [userLoaded, setUserLoaded] = useState(false);
+    useEffect(() => {
+        getUser().then(objeto => {
+            setRol(objeto["rol"]);
+            setUserLoaded(true);
+        });
+    }, [userLoaded]);
 
     const {id} = useParams();
 
@@ -55,7 +59,7 @@ function ShowInventory() {
             }
         })
         
-    }, [inputs]);
+    }, [inputs, userLoaded]);
 
   return (
     <div>

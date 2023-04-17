@@ -18,52 +18,51 @@ const theme = createTheme();
 function ShowRecord() {
     // user = await getUser();
     const [patient, setPatient] = useState({});
-    const [records, setRecords] = useState([]);
-    let [fullRecords, setFullRecords] = useState({});
+    let [records, setRecords] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const navigate = useNavigate();
+    const {id} = useParams();
+    // To load the right navbar
+    const [rol, setRol] = useState([]);
+    const [userLoaded, setUserLoaded] = useState(false);
     useEffect(() => {
-        supabase.from('pacientes').select('id, nombre, apellidos').eq('id', id).then(({data, error}) => {
-            if (error) {
-                console.log(error);
-            } else {
-                setPatient(data[0]);
-            }
-        })
-
-        supabase.from('consultas')
-            .select('*')
-            .eq('paciente_id', id)
-            .then(({data, error}) => {
-                if (error) {
-                    console.log(error);
-                } else {
-                    setRecords(data);
-                }
-            })
-
-        setLoading(false);
+        getUser().then(objeto => {
+            setRol(objeto["rol"]);
+            setUserLoaded(true);
+        });
     }, []);
 
     useEffect(() => {
-        fullRecords = records.map(async (record) => {
-            return {
-                ...record,
-                doctor: await supabase.from('medicos').select('nombre, apellidos').eq('id', record.medico_id)
+        supabase.rpc('getConsultas', {selected_id: id}).then(({data, error}) => {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log(data);
+                setRecords(data);
             }
-        })
-        supabase.from('medicos')
-            .select('*')
-            .eq('id', records.medico_id)
-    }, [patient, records]);
+        } );
 
-    useEffect(() => {
-        console.log("Paciente: ", patient);
-        console.log("Consultas: ", records);
-    }, [patient, records]);
+        setLoading(false);
+    }, [userLoaded]);
 
-    const navigate = useNavigate();
-    const {id} = useParams();
+    // useEffect(() => {
+    //     fullRecords = records.map(async (record) => {
+    //         return {
+    //             ...record,
+    //             doctor: await supabase.from('medicos').select('nombre, apellidos').eq('id', record.medico_id)
+    //         }
+    //     })
+    //     supabase.from('medicos')
+    //         .select('*')
+    //         .eq('id', records.medico_id)
+    // }, [patient, records]);
+    //
+    // useEffect(() => {
+    //     console.log("Paciente: ", patient);
+    //     console.log("Consultas: ", records);
+    // }, [patient, records]);
+
+
 
     // FOR THE ACCORDION
     const [expanded, setExpanded] = React.useState(false);

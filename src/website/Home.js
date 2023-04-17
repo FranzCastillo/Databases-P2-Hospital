@@ -71,8 +71,6 @@ const card = () => {
 
 const getData = async () => {    
     const user = getUser();
-    console.log('corrio');
-    console.log(user);
 }
 
 function Home() {
@@ -81,11 +79,15 @@ function Home() {
     const [name, setName] = useState(null);
     const [lastName, setLastName] = useState(null);
     const user = getUser();
+    // To load the right navbar
     const [rol, setRol] = useState([]);
-    user.then(objeto => {
-        setRol(objeto["rol"]);
-        console.log(rol); // "admin"
-    });
+    const [userLoaded, setUserLoaded] = useState(false);
+    useEffect(() => {
+        getUser().then(objeto => {
+            setRol(objeto["rol"]);
+            setUserLoaded(true);
+        });
+    }, []);
     
     console.log('1');
     getData();
@@ -111,7 +113,7 @@ function Home() {
         };
         fetchEmail();
         
-    }, [navigate]);
+    }, [navigate, userLoaded]);
     
     return (
         <div>

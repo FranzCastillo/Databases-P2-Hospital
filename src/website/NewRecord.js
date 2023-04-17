@@ -34,11 +34,16 @@ function NewRecord() {
     const [statuses, setStatuses] = useState([]);
     const [userStatus, setUserStatus] = useState([]);
     const [observations, setObservations] = useState('');
+    // To load the right navbar
     const [rol, setRol] = useState([]);
-    user.then(objeto => {
-        setRol(objeto["rol"]);
-        console.log(rol); // "admin"
-    });
+    const [userLoaded, setUserLoaded] = useState(false);
+    useEffect(() => {
+        getUser().then(objeto => {
+            setRol(objeto["rol"]);
+            setUserLoaded(true);
+        });
+    }, []);
+
 
     const navigate = useNavigate();
 
@@ -53,7 +58,7 @@ function NewRecord() {
                 setPatients(data);
             }
         })
-    }, []);
+    }, [userLoaded]);
     useEffect(() => {
         supabase.from('lugares').select('id, nombre').then(({data, error}) => {
             data.forEach((place) => {
@@ -65,7 +70,7 @@ function NewRecord() {
                 setPlaces(data);
             }
         });
-    }, []);
+    }, [userLoaded]);
     useEffect(() => {
         supabase.from('tratamientos').select('id, nombre').then(({data, error}) => {
             data.forEach((treatment) => {
@@ -77,7 +82,7 @@ function NewRecord() {
                 setTreatments(data);
             }
         });
-    }, []);
+    }, [userLoaded]);
     useEffect(() => {
         supabase.from('examenes').select('id, nombre').then(({data, error}) => {
             data.forEach((exam) => {
@@ -89,7 +94,7 @@ function NewRecord() {
                 setExams(data);
             }
         });
-    }, []);
+    }, [userLoaded]);
     useEffect(() => {
         supabase.from('status').select('id, status').then(({data, error}) => {
             data.forEach((status) => {
@@ -101,7 +106,7 @@ function NewRecord() {
                 setStatuses(data);
             }
         });
-    }, []);
+    }, [userLoaded]);
     useEffect(() => {
         supabase.from('enfermedades').select('id, nombre').then(({data, error}) => {
             data.forEach((disease) => {
@@ -113,7 +118,7 @@ function NewRecord() {
                 setDiseases(data);
             }
         });
-    }, []);
+    }, [userLoaded]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();

@@ -9,7 +9,6 @@ function NotFound() {
     const [rol, setRol] = useState([]);
     user.then(objeto => {
         setRol(objeto["rol"]);
-        console.log(rol); // "admin"
     });
     return (
         <div>

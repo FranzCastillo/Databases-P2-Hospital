@@ -19,38 +19,41 @@ import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
 
 
-const user = getUser();
 const theme = createTheme();
 function Records() {
     const [patients, setPatients] = useState([]);
     const [patient, setPatient] = useState(null);
-    const [rol, setRol] = useState([]);
-    user.then(objeto => {
-        setRol(objeto["rol"]);
-        console.log(rol); // "admin"
-    });
-
     const navigate = useNavigate();
 
+    // To load the right navbar
+    const [rol, setRol] = useState([]);
+    const [userLoaded, setUserLoaded] = useState(false);
+    useEffect(() => {
+        getUser().then(objeto => {
+            setRol(objeto["rol"]);
+            setUserLoaded(true);
+        });
+    }, []);
 
     useEffect(() => {
-        supabase.from('pacientes').select('id, nombre, apellidos').then(({data, error}) => {
-            data.forEach((patient) => {
-                patient.label = patient.nombre + ' ' + patient.apellidos;
-            });
-            if (error) {
-                alert.log(error);
-            } else {
-                setPatients(data);
-            }
-        })
-    }, []);
+        if (userLoaded) {
+            supabase.from('pacientes').select('id, nombres, apellidos').then(({data, error}) => {
+                data.forEach((patient) => {
+                    patient.label = patient.nombres + ' ' + patient.apellidos;
+                });
+                if (error) {
+                    alert.log(error);
+                } else {
+                    setPatients(data);
+                }
+            })
+        }
+    }, [userLoaded]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         navigate('/expedientes/' + patient.id);
     }
-    console.log(user);
     return (
         <div>
             {rol === "admin" ? <NavBarAdmin/> : <NavBarUser/>}

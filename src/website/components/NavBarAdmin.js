@@ -5,7 +5,7 @@ function NavBarAdmin() { //Navbar del admin
                 <li><a href="/home"> Inicio </a></li>
                 <li><a href="/inventario"> Inventario </a></li>
                 <li><a href="/expedientes"> Expedientes </a></li>
-                <li><a href="/usuarios"> Administar usuarios </a></li>
+                <li><a href="/usuarios"> Administar Usuarios </a></li>
                 <li><a href="/bitacora"> Bitácora </a></li>
                 <li><a href="/reportes"> Reportes </a></li>
                 <li><a href="/expedientes/nuevo"> Nueva Consulta </a></li>
