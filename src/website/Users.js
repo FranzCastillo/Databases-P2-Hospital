@@ -41,12 +41,17 @@ function Users() {
     const [place, setPlace] = React.useState('');
     const [specialties, setSpecialties] = useState('');
     const [specialty, setSpecialty] = useState('');
+    const [role, setRole] = useState('');
     const [flagNumber, setFlagNumber] = useState('');
     const [flagID, setFlagID] = useState('');
-    const [flagIDSpecialty, setFlagIDSpecialty] = useState('');
-    const [flagIDPlace, setFlagIDPlace] = useState('');
+    const [flagRol, setFlagRol] = useState('');
     const [medicsNumbers, setMedicsNumbers] = useState('');
     const navigate = useNavigate();
+
+    const roles = [
+        { label: 'Administrador', value: 'admin' },
+        { label: 'Usuario', value: 'user' },
+      ];
 
     // Creates an array of the places from the tables lugares
     React.useEffect(() => {
@@ -84,7 +89,6 @@ function Users() {
                 alert(error.message);
             } else {
                 setMedicsNumbers(data);
-                console.log(medicsNumbers)
             }
         });
     }, []);
@@ -108,6 +112,7 @@ function Users() {
                         direccion: address,
                         num_colegiado: colegiate_number,
                         correo: email,
+                        rol: role.value,
                     });
     
                 // Sets the user information in /components/UserInfo.js
@@ -166,7 +171,6 @@ function Users() {
             }
           }
         if (contador > 0){
-            console.log(place.id)
             try {
                 await supabase
                     .from("medicos")
@@ -177,6 +181,7 @@ function Users() {
                         direccion: address,
                         num_colegiado: colegiate_number,
                         correo: email,
+                        rol: role.value,
                     })
                     .eq('num_colegiado', flagNumber);
                 
@@ -206,6 +211,7 @@ function Users() {
             alert("El usuario no existe")
         }
     };
+
 
     return (
         <div>
@@ -312,6 +318,16 @@ function Users() {
                                     onChange={(event, value) => setSpecialty(value)}
                                 />
                             </Grid>
+                            <Grid item xs={12}>
+                                <Autocomplete
+                                    disablePortal
+                                    required
+                                    id="combo-box-role"
+                                    options={roles}
+                                    renderInput={(params) => <TextField {...params} label="Rol"/>}
+                                    onChange={(event, value) => setRole(value)}
+                                />
+                            </Grid>
                             {/*Textbox for the email*/}
                             <Grid item xs={12}>
                                 <TextField
@@ -350,7 +366,7 @@ function Users() {
                                         variant="contained"
                                         onClick={handleUpdateUser}
                                     >Actualizar Usuario</Button>
-                                </Grid>
+                            </Grid>
                         </Grid>
                     </Box>
                 </Box>
