@@ -41,7 +41,7 @@ function ShowRecord() {
             setRol(objeto["rol"]);
             setUserLoaded(true);
         });
-    }, []);
+    }, [userLoaded]);
 
     useEffect(() => {
         supabase.rpc('get_consultas', {selected_id: id}).then(({data, error}) => {
@@ -84,7 +84,6 @@ function ShowRecord() {
                 console.log(error);
             } else {
                 setTreatments(data);
-                setLoading(false);
             }
         });
 
@@ -97,11 +96,10 @@ function ShowRecord() {
                     nombre: disease.nombre.trim(),
                 }));
                 setInheritDiseases(inheritDiseases);
-                console.log(inheritDiseases);
+                setLoading(false);
+                setUserLoaded(true);
             }
         });
-
-
     }, [userLoaded]);
 
     // FOR THE ACCORDION
@@ -112,7 +110,7 @@ function ShowRecord() {
     };
     // --------------------------------------------
 
-    if (loading) {
+    if (!userLoaded && loading) {
         return <div>Loading...</div>;
     } else {
         return (
@@ -122,7 +120,7 @@ function ShowRecord() {
                     <Typography>No existe el paciente</Typography>
                 ) : (
                     <>
-                        {user.role === "admin" ? <NavBarUser/> : <NavBarAdmin/>}
+                        {rol === "admin" ? <NavBarAdmin/> : <NavBarUser/>}
                         <Container maxWidth="lg">
                         <div>
                                 <Accordion>
