@@ -17,7 +17,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 
 const theme = createTheme();
 
-export default function NewPatient() {
+export default function UpdatePatient() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [cellphone, setCellphone] = useState('');
