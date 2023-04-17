@@ -8,7 +8,7 @@ import Records from "./website/Records";
 import NotFound from "./website/NotFound";
 import {supabase} from './supabase/client';
 import Inventory from "./website/Inventory";
-import Medics from "./website/Medics";
+import Users from "./website/Users";
 import Logs from "./website/Logs";
 import Reports from "./website/Reports";
 import NewRecord from "./website/NewRecord";
@@ -16,6 +16,7 @@ import NewPatient from "./website/NewPatient";
 import SignOut from "./website/SignOut";
 import ShowRecord from "./website/ShowRecord";
 import ShowInventory from "./website/ShowInventory";
+import NewInput from "./website/NewInput";
 
 
 export default function App() {
@@ -51,8 +52,9 @@ export default function App() {
                 <Route path="/home" element={<Home/>}/>
                 <Route path="/inventario" element={<Inventory/>}/>
                 <Route path="/inventario/:id" element={<ShowInventory/>}/>
+                <Route path="/inventario/nuevo" element={<NewInput/>}/>
                 <Route path="/expedientes" element={<Records/>}/>
-                <Route path="/medicos" element={<Medics/>}/>
+                <Route path="/usuarios" element={<Users/>}/>
                 <Route path="/bitacora" element={<Logs/>}/>
                 <Route path="/reportes" element={<Reports/>}/>
                 <Route path="/expedientes/nuevo" element={<NewRecord/>}/>

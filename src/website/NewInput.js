@@ -16,11 +16,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Autocomplete from '@mui/material/Autocomplete';
-import VaccinesIcon from '@mui/icons-material/Vaccines';
+import AddIcon from '@mui/icons-material/Add';
 import {green} from '@mui/material/colors';
 
-
-function Inventory() {
+function NewInput() {
     const user = getUser();
     const navigate = useNavigate();
     const theme = createTheme({
@@ -29,29 +28,30 @@ function Inventory() {
         }
     });
     const [options, setOptions] = useState([]);
+    const [options2, setOptions2] = useState([]);
     const [place, setPlace] = useState([]);
-    const [id, setID] = useState([]);
-    
+    const [input, setInput] = useState([]);
+    const [placeID, setPlaceID] = useState([]);
+    const [inputID, setInputID] = useState([]);
+    const [initialNumber, setInitialNumber] = useState([]);
+    const [actualNumber, setActualNumber] = useState([]);
+
     //Al darle click al boton:
     const handleSubmit = async (e) => {
         e.preventDefault();
+        alert("Función no terminada")
         //const {data: placeID} = await supabase.from('lugares').select('id').eq('nombre', place);
         //setId(placeID.map(id => id.id))
-        supabase.from('lugares').select('id').eq('nombre', place).then(({data, error}) => {
+        /*supabase.from('lugares').select('id').eq('nombre', place).then(({data, error}) => {
             if (error) {
                 console.log(error);
                 
             } else {
-                setID(data[0].id)
+                //setID(data[0].id)
                 navigate('/inventario/' + data[0].id);
-            }
-        })
+            }*/
+        //})
         
-    }
-
-    const handleNewInput = async (event) => {
-        event.preventDefault();
-        navigate('/inventario/nuevo');
     }
 
     useEffect(() => {
@@ -64,13 +64,20 @@ function Inventory() {
 
         getOptions();
 
-    }, [id]);
+        async function getOptions2() {
+            const {data: optionsData2} = await supabase.from('insumos').select('nombre');
+            setOptions2(optionsData2.map(option2 => option2.nombre));
+        }
 
-    return (
-        <div>
-            {user.role === "admin" ? <NavBarUser/> : <NavBarAdmin/>}
+        getOptions2();
 
-            <ThemeProvider theme={theme}>
+    }, []);
+
+  return (
+    <div>
+        {user.role === "admin" ? <NavBarUser/> : <NavBarAdmin/>}
+        
+        <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth={"xs"}>
                     <CssBaseline/>
                     <Box
@@ -82,14 +89,14 @@ function Inventory() {
                         }}
                     >
                         <Avatar sx={{bgcolor: green[500]}} variant="rounded">
-                            <VaccinesIcon/>
+                            <AddIcon/>
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                            Inventario de insumos
+                            Ingresar insumos
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 2, width: '100%'}}>
                             <Grid container spacing={2}>
-                                <Grid item xs={8}>
+                                <Grid item xs={12}>
                                     <Autocomplete
                                         disablePortal
                                         required
@@ -99,14 +106,39 @@ function Inventory() {
                                         onChange={(event, value) => setPlace(value)}
                                     />
                                 </Grid>
-                                <Grid item xs={4}>
-                                    <Button
-                                        fullWidth
-                                        variant="contained"
-                                        color={"secondary"}
-                                        onClick={handleNewInput}
-                                    >Ingresar insumo</Button>
+                                <Grid item xs={12}>
+                                    <Autocomplete
+                                        disablePortal
+                                        required
+                                        id="combo-box-inputs"
+                                        options={options2}
+                                        renderInput={(params) => <TextField {...params} label="Insumo"/>}
+                                        onChange={(event, value) => setInput(value)}
+                                    />
                                 </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        name="actual_number"
+                                        required
+                                        fullWidth
+                                        id="actual_number"
+                                        label="Cantidad actual"
+                                        autoFocus
+                                        onChange={(event) => setActualNumber(event.target.value)}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        name="initial_number"
+                                        required
+                                        fullWidth
+                                        id="initial_number"
+                                        label="Cantidad inicial"
+                                        autoFocus
+                                        onChange={(event) => setInitialNumber(event.target.value)}
+                                    />
+                                </Grid>
+                                
                             </Grid>
                             <Button
                                 type="submit"
@@ -114,7 +146,7 @@ function Inventory() {
                                 variant="contained"
                                 sx={{mt: 3, mb: 2}}
                             >
-                                Consultar
+                                Actualizar
                             </Button>
                         </Box>
                     </Box>
@@ -122,6 +154,7 @@ function Inventory() {
             </ThemeProvider>
 
         </div>
-    )
+  )
 }
-export default Inventory
+
+export default NewInput
