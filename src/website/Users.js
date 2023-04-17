@@ -93,123 +93,142 @@ function Users() {
         });
     }, []);
 
-    const handleCreateUser = async (event) => {
-        event.preventDefault();
-        let contador = 0;
-        for (let i = 0; i <= medicsNumbers.length - 1; i++) {
-            if (medicsNumbers[i].num_colegiado === colegiate_number){
-                contador = contador + 1;
-            }
+    function validateForm() {
+        const form = document.querySelector('form');
+        const fields = form.elements;
+      
+        for (let i = 0; i < fields.length; i++) {
+          if (fields[i].required && fields[i].value.trim() === '') {
+            alert('Por favor complete todos los campos del formulario');
+            return false;
           }
-        if (contador == 0){
-            try {
-                await supabase
-                    .from("medicos")
-                    .insert({
-                        nombres: firstName,
-                        apellidos: lastName,
-                        telefono: cellphone,
-                        direccion: address,
-                        num_colegiado: colegiate_number,
-                        correo: email,
-                        rol: role.value,
-                    });
-    
-                // Sets the user information in /components/UserInfo.js
-                const user = await createNewUser(email, place.id, specialty.id);
-                await supabase
-                    .from("especializados")
-                    .insert({
-                        medico_id: user.id,
-                        especialidad_id: specialty.id,
-                    });
-    
-                await supabase
-                    .from("trabajos")
-                    .insert({
-                        medico_id: user.id,
-                        lugar_id: user.place,
+        }
+        return true;
+      }
+      
+    const handleCreateUser = async (event) => {
+        if (validateForm()){
+            event.preventDefault();
+            let contador = 0;
+            for (let i = 0; i <= medicsNumbers.length - 1; i++) {
+                if (medicsNumbers[i].num_colegiado === colegiate_number){
+                    contador = contador + 1;
+                }
+            }
+            if (contador == 0){
+                try {
+                    await supabase
+                        .from("medicos")
+                        .insert({
+                            nombres: firstName,
+                            apellidos: lastName,
+                            telefono: cellphone,
+                            direccion: address,
+                            num_colegiado: colegiate_number,
+                            correo: email,
+                            rol: role.value,
+                        });
+        
+                    // Sets the user information in /components/UserInfo.js
+                    const user = await createNewUser(email, place.id, specialty.id);
+                    await supabase
+                        .from("especializados")
+                        .insert({
+                            medico_id: user.id,
+                            especialidad_id: specialty.id,
+                        });
+        
+                    await supabase
+                        .from("trabajos")
+                        .insert({
+                            medico_id: user.id,
+                            lugar_id: user.place,
+                        })
+        
+        
+                    console.log("User created: ", user);
+                    const { data, error } = await supabase.auth.admin.createUser({
+                        email: email,
+                        password: password,
+                        email_confirm: true
                     })
-    
-    
-                console.log("User created: ", user);
-                const { data, error } = await supabase.auth.admin.createUser({
-                    email: email,
-                    password: password,
-                    email_confirm: true
-                  })
-                  if (error){
-                    console.log(error)
-                  }
-    
-                alert("Usuario creado!")
-    
-            } catch (error) {
-                console.log(error);
+                    if (error){
+                        console.log(error)
+                    }
+        
+                    alert("Usuario creado!")
+        
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            else{
+                alert("El usuario ya existe")
             }
         }
-        else{
-            alert("El usuario ya existe")
-        }
+        
         
     };
 
     const handleUpdateUser = async (event) => {
-        event.preventDefault();
-        let contador = 0;
-        for (let i = 0; i <= medicsNumbers.length - 1; i++) {
-            if (medicsNumbers[i].num_colegiado === colegiate_number){
-                contador = contador + 1;
-                setFlagNumber(medicsNumbers[i].num_colegiado)
-                supabase.from('medicos').select('id').eq('num_colegiado', flagNumber).then(({data, error}) => {
-                    if (error) {
-                        alert(error.message);
-                    } else {
-                        setFlagID(data[0].id);
-                    }
-                });
+        if (validateForm()){
+            event.preventDefault();
+            let contador = 0;
+            for (let i = 0; i <= medicsNumbers.length - 1; i++) {
+                if (medicsNumbers[i].num_colegiado === colegiate_number){
+                    contador = contador + 1;
+                    setFlagNumber(medicsNumbers[i].num_colegiado)
+                    supabase.from('medicos').select('id').eq('num_colegiado', flagNumber).then(({data, error}) => {
+                        if (error) {
+                            alert(error.message);
+                        } else {
+                            setFlagID(data[0].id);
+                        }
+                    });
+                }
             }
-          }
-        if (contador > 0){
-            try {
-                await supabase
-                    .from("medicos")
-                    .update({
-                        nombres: firstName,
-                        apellidos: lastName,
-                        telefono: cellphone,
-                        direccion: address,
-                        num_colegiado: colegiate_number,
-                        correo: email,
-                        rol: role.value,
-                    })
-                    .eq('num_colegiado', flagNumber);
-                
-                await supabase
-                    .from("especializados")
-                    .update({
-                        medico_id: flagID,
-                        especialidad_id: specialty.id,
-                    })
-                    .eq('medico_id', flagID);
-    
-                await supabase
-                    .from("trabajos")
-                    .update({
-                        medico_id: flagID,
-                        lugar_id: place.id, 
-                    })
-                    .eq('medico_id', flagID);
-    
-                alert("Usuario actualizado!")
-    
-            } catch (error) {
-                console.log(error);
+            if (contador > 0){
+                try {
+                    await supabase
+                        .from("medicos")
+                        .update({
+                            nombres: firstName,
+                            apellidos: lastName,
+                            telefono: cellphone,
+                            direccion: address,
+                            num_colegiado: colegiate_number,
+                            correo: email,
+                            rol: role.value,
+                        })
+                        .eq('num_colegiado', flagNumber);
+                    
+                    await supabase
+                        .from("especializados")
+                        .update({
+                            medico_id: flagID,
+                            especialidad_id: specialty.id,
+                        })
+                        .eq('medico_id', flagID);
+        
+                    await supabase
+                        .from("trabajos")
+                        .update({
+                            medico_id: flagID,
+                            lugar_id: place.id, 
+                        })
+                        .eq('medico_id', flagID);
+        
+                    alert("Usuario actualizado!")
+        
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            else{
+                alert("El usuario no existe")
             }
         }
-        else{
-            alert("El usuario no existe")
-        }
+        
     };
 
 
@@ -233,7 +252,7 @@ function Users() {
                     <Typography component="h1" variant="h5">
                         Administrar usuario
                     </Typography>
-                    <Box component="form" noValidate /*onSubmit={handleSubmit}*/ sx={{mt: 3}}>
+                    <Box component="form" noValidate /*onSubmit={validateForm()}*/ sx={{mt: 3}}>
                         <Grid container spacing={2}>
                             {/*TextBox for the first name*/}
                             <Grid item xs={12} sm={6}>

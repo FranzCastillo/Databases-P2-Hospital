@@ -16,13 +16,18 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 
 const user = getUser();
-const theme = createTheme();
+const theme = createTheme({
+    typography: {
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+    }
+});
 
 function ShowRecord() {
     // user = await getUser();
     const [patient, setPatient] = useState({});
     const [records, setRecords] = useState([]);
     const [diseases, setDiseases] = useState([]);
+    const [inheritDiseases, setInheritDiseases] = useState([]);
     const [exams, setExams] = useState([]);
     const [treatments, setTreatments] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -36,7 +41,7 @@ function ShowRecord() {
             setRol(objeto["rol"]);
             setUserLoaded(true);
         });
-    }, []);
+    }, [userLoaded]);
 
     useEffect(() => {
         supabase.rpc('get_consultas', {selected_id: id}).then(({data, error}) => {
@@ -79,14 +84,22 @@ function ShowRecord() {
                 console.log(error);
             } else {
                 setTreatments(data);
-                setLoading(false);
             }
         });
 
-        supabase
-            .from('enfermedades_heredadas')
-            .select('')
-
+        supabase.rpc('get_patient_inherited_diseases', {selected_id: 12}).then(({data, error}) => {
+            if (error) {
+                console.log(error);
+            } else {
+                const inheritDiseases = data.map(disease => ({
+                    paciente_id: disease.paciente_id,
+                    nombre: disease.nombre.trim(),
+                }));
+                setInheritDiseases(inheritDiseases);
+                setLoading(false);
+                setUserLoaded(true);
+            }
+        });
     }, [userLoaded]);
 
     // FOR THE ACCORDION
@@ -97,16 +110,17 @@ function ShowRecord() {
     };
     // --------------------------------------------
 
-    if (loading) {
+    if (!userLoaded && loading) {
         return <div>Loading...</div>;
     } else {
         return (
             <div sx={{maxWidth: 'lg'}}>
+            <ThemeProvider theme={theme}>
                 {patient === undefined ? (
                     <Typography>No existe el paciente</Typography>
                 ) : (
                     <>
-                        {user.role === "admin" ? <NavBarUser/> : <NavBarAdmin/>}
+                        {rol === "admin" ? <NavBarAdmin/> : <NavBarUser/>}
                         <Container maxWidth="lg">
                         <div>
                                 <Accordion>
@@ -148,6 +162,15 @@ function ShowRecord() {
                                             </Typography>
                                             <Typography sx={{width: '33%'}}>
                                                 Teléfono: <span style={{fontWeight: "bold"}}>{patient.telefono}</span>
+                                            </Typography>
+                                            <Typography sx={{width: '100%', height: 'auto'}}>
+                                                Enfermedades Heredadas: <br/><span style={{fontWeight: "bold"}}>
+                                                {inheritDiseases.map((disease, index) => (
+                                                    <span key={index}>{disease.nombre}, </span>
+                                                ))} </span>
+                                            </Typography>
+                                            <Typography sx={{width: '33%'}}>
+                                                Adicciones: <span style={{fontWeight: "bold"}}>{patient.adicciones}</span>
                                             </Typography>
                                             <Typography sx={{width: '100%'}}>
                                                 ID: <span style={{fontWeight: "bold"}}>{patient.id}</span>
@@ -259,6 +282,7 @@ function ShowRecord() {
                         </Container>
                     </>
                 )}
+            </ThemeProvider>
             </div>
         );
     }

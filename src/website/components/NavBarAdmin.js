@@ -1,4 +1,14 @@
+import { supabase } from "../../supabase/client";
+import {useNavigate} from "react-router-dom";
+
 function NavBarAdmin() { //Navbar del admin
+    const navigate = useNavigate();
+    
+    function redirectPage() {
+        navigate('/login');
+        supabase.auth.signOut();
+    }
+    
     return (
         <nav className="navbar">
             <ul>
@@ -9,7 +19,7 @@ function NavBarAdmin() { //Navbar del admin
                 <li><a href="/bitacora"> Bitácora </a></li>
                 <li><a href="/reportes"> Reportes </a></li>
                 <li><a href="/expedientes/nuevo"> Nueva Consulta </a></li>
-                <li><a href="/signout">Cerrar sesión</a></li>
+                <li><a href="#" onClick={redirectPage} >Cerrar sesión</a></li>
             </ul>
         </nav>
     );

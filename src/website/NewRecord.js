@@ -18,7 +18,11 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import {green} from '@mui/material/colors';
 
 const user = getUser();
-const theme = createTheme();
+const theme = createTheme({
+    typography: {
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+    }
+});
 
 function NewRecord() {
     const [patients, setPatients] = useState([]);
@@ -220,7 +224,7 @@ function NewRecord() {
                                         variant="contained"
                                         color={"secondary"}
                                         onClick={handleNewPatient}
-                                    >Nuevo Paciente</Button>
+                                    >ㅤNuevo ㅤPaciente</Button>
                                 </Grid>
                                 <Grid item xs={8}>
                                     <Autocomplete

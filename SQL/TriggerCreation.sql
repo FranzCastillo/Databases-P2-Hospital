@@ -7,7 +7,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER trigger_prevent_delete
-BEFORE DELETE ON usuarios
+BEFORE DELETE ON medicos
 FOR EACH ROW
 EXECUTE FUNCTION prevent_delete();
 

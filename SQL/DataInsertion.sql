@@ -1,4 +1,4 @@
-INSERT INTO pacientes (nombre, apellidos, telefono, direccion, imc, altura_en_cm, peso_en_kg, adicciones) VALUES
+INSERT INTO pacientes (nombres, apellidos, telefono, direccion, imc, altura_en_cm, peso_en_kg, adicciones) VALUES
 ('Ana', 'García', '555-1234', 'Av. Insurgentes #456', 21.5, 170, 65.0, 'Sin adicciones'),
 ('Juan', 'Martínez', '555-5678', 'Calle Cuauhtémoc #789', 22.0, 175, 70.0, 'Fuma ocasionalmente'),
 ('María', 'Hernández', '-', 'Calle Reforma #321', 25.5, 168, 80.0, 'Bebe alcohol regularmente'),
