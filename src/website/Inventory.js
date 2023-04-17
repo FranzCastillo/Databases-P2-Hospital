@@ -99,7 +99,7 @@ function Inventory() {
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 2, width: '100%'}}>
                             <Grid container spacing={2}>
-                                <Grid item xs={8}>
+                                <Grid item xs={12}>
                                     <Autocomplete
                                         disablePortal
                                         required
@@ -108,14 +108,6 @@ function Inventory() {
                                         renderInput={(params) => <TextField {...params} label="Establecimiento"/>}
                                         onChange={(event, value) => setPlace(value)}
                                     />
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <Button
-                                        fullWidth
-                                        variant="contained"
-                                        color={"secondary"}
-                                        onClick={handleNewInput}
-                                    >Ingresar insumo</Button>
                                 </Grid>
                             </Grid>
                             <Button

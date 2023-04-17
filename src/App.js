@@ -17,7 +17,11 @@ import SignOut from "./website/SignOut";
 import ShowRecord from "./website/ShowRecord";
 import ShowInventory from "./website/ShowInventory";
 import NewInput from "./website/NewInput";
-
+import ReportOne from "./website/ReportOne";
+import ReportTwo from "./website/ReportTwo";
+import ReportThree from "./website/ReportThree";
+import ReportFour from "./website/ReportFour";
+import ReportFive from "./website/ReportFive";
 
 export default function App() {
     const [session, setSession] = useState(null)
@@ -57,6 +61,11 @@ export default function App() {
                 <Route path="/usuarios" element={<Users/>}/>
                 <Route path="/bitacora" element={<Logs/>}/>
                 <Route path="/reportes" element={<Reports/>}/>
+                <Route path="/reportes/1" element={<ReportOne/>}/>
+                <Route path="/reportes/2" element={<ReportTwo/>}/>
+                <Route path="/reportes/3" element={<ReportThree/>}/>
+                <Route path="/reportes/4" element={<ReportFour/>}/>
+                <Route path="/reportes/5" element={<ReportFive/>}/>
                 <Route path="/expedientes/nuevo" element={<NewRecord/>}/>
                 <Route path="/expedientes/:id" element={<ShowRecord/>}/>
                 <Route path="patient/new" element={<NewPatient/>}/>
