@@ -84,7 +84,7 @@ export default function SignUp() {
                 redirectTo: 'http://localhost:3000/home',
             });
 
-            alert("Se ha enviado un correo electrónico para verificar su cuenta.")
+            alert("Bienvenido!")
 
         } catch (error) {
             console.log(error);
