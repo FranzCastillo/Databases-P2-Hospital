@@ -14,10 +14,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
 
-function createData(name,calories,fat,carbs,protein,) {
-    return { name, calories, fat, carbs, protein };
-}
-
 
 
 function BasicTable(filas) {
@@ -74,7 +70,7 @@ const card = (name, lastName,email) => {
     );
 }
 
-const box = () => {
+const box = (callback) => {
     return (
         <div id='box' style={{display:'flex', backgroundColor:'#cfcfcf', height:'300px', marginTop: '25px', borderRadius:'5px', overflow:'hidden', boxShadow: '1px 1px 10px rgba(0, 0, 0, 0.1)'}}>
             <img style={{height:'inherit', marginRight: '12px'}} src='https://www.hartmann.info/en-dx/-/media/corporate/img/nci-2/hartmann-personalhealthcare-stage-nci.jpg?h=1100&iar=0&mw=1440&w=1440&rev=1ed346208e7d4ab39c861f7703313a89&sc_lang&hash=E7CBDCE65634232C758D591FCB04C197'></img>
@@ -82,7 +78,7 @@ const box = () => {
                 <p style={{color:'white'}}>Bienvenido al software de salud diseñado especialmente para médicos como tú. Nuestra herramienta es una solución integral para la gestión de pacientes, historiales médicos, y citas</p>
                 <div style={{display:'flex', justifyContent: 'right', padding:'20px' }}>
                     <div id='buttonWrapper' style = {{backgroundColor:'#0072c6', height:'20px', display:'flex', alignItems:'center', borderRadius:'5px', padding:'7px'}}>
-                        <a style ={{color:'white'}} /*onClick={navigate()}*/ >Nueva Consulta</a>
+                        <a style ={{color:'white'}} onClick={() =>  callback()} >Nueva Consulta</a>
                     </div>
                 </div>
             </div>
@@ -103,8 +99,12 @@ function Home() {
     const [rol, setRol] = useState([]);
     const [userLoaded, setUserLoaded] = useState(false);
     const [rows, setRows] = useState(null);
-    const [doctorId, setDoctorId] = useState(null);
+    const [doctorId, setDoctorId] = useState(null);    
 
+    const handleClick = () => {
+    // Navigate to the "/about" page
+        navigate('/expedientes/nuevo');
+    }
 
     useEffect(() => {
         getUser().then(objeto => {
@@ -172,7 +172,7 @@ function Home() {
                 <div className='TableContainer' >
                     {BasicTable(rows)}
                 </div>
-                {box()}
+                {box(handleClick)}
             </div>            
         </div>
     )
