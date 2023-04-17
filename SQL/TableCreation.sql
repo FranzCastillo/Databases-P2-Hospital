@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS pacientes(
     id SERIAL PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
+    nombres VARCHAR(50) NOT NULL,
     apellidos VARCHAR(50) NOT NULL,
     telefono VARCHAR(15) DEFAULT '-',
     direccion VARCHAR(100) DEFAULT '-',

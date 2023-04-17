@@ -45,9 +45,10 @@ function Records() {
         event.preventDefault();
         navigate('/expedientes/' + patient.id);
     }
+    console.log(user);
     return (
         <div>
-            {user.role === "admin" ? <NavBarUser/> : <NavBarAdmin/>}
+            {user.role === "admin" ? <NavBarAdmin/> : <NavBarUser/>}
             <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth={"xs"}>
                     <CssBaseline/>

@@ -50,7 +50,7 @@ export default function SignUp() {
             await supabase
                 .from("pacientes")
                 .insert({
-                    nombre: firstName,
+                    nombres: firstName,
                     apellidos: lastName,
                     telefono: cellphone,
                     direccion: address,

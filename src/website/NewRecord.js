@@ -38,7 +38,7 @@ function NewRecord() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        supabase.from('pacientes').select('id, nombre, apellidos').then(({data, error}) => {
+        supabase.from('pacientes').select('id, nombres, apellidos').then(({data, error}) => {
             data.forEach((patient) => {
                 patient.label = patient.nombre + ' ' + patient.apellidos;
             });
