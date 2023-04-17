@@ -1,14 +1,14 @@
 INSERT INTO pacientes (nombre, apellidos, telefono, direccion, imc, altura_en_cm, peso_en_kg, adicciones) VALUES
-('Ana', 'García', '555-1234', 'Av. Insurgentes #456', 21.5, 1.70, 65.0, 'Sin adicciones'),
-('Juan', 'Martínez', '555-5678', 'Calle Cuauhtémoc #789', 22.0, 1.75, 70.0, 'Fuma ocasionalmente'),
-('María', 'Hernández', '-', 'Calle Reforma #321', 25.5, 1.68, 80.0, 'Bebe alcohol regularmente'),
-('Luis', 'Pérez', '555-9012', 'Calle 5 de Mayo #101', 28.0, 1.85, 90.0, 'Sin adicciones'),
-('Karla', 'Ramírez', '555-3456', 'Calle Hidalgo #567', 24.5, 1.60, 60.0, 'Fuma diariamente'),
-('Pedro', 'Sánchez', '-', 'Calle Juárez #910', 29.0, 1.80, 85.0, 'Bebe alcohol regularmente'),
-('Sofía', 'Gómez', '555-7890', 'Av. Revolución #111', 20.0, 1.55, 50.0, 'Sin adicciones'),
-('Jorge', 'López', '555-2345', 'Calle Independencia #222', 26.0, 1.72, 75.0, 'Fuma ocasionalmente'),
-('Ana', 'Martínez', '555-6789', 'Calle Morelos #333', 31.0, 1.90, 100.0, 'Bebe alcohol regularmente'),
-('José', 'González', '-', 'Calle Guerrero #444', 23.0, 1.78, 70.0, 'Sin adicciones');
+('Ana', 'García', '555-1234', 'Av. Insurgentes #456', 21.5, 170, 65.0, 'Sin adicciones'),
+('Juan', 'Martínez', '555-5678', 'Calle Cuauhtémoc #789', 22.0, 175, 70.0, 'Fuma ocasionalmente'),
+('María', 'Hernández', '-', 'Calle Reforma #321', 25.5, 168, 80.0, 'Bebe alcohol regularmente'),
+('Luis', 'Pérez', '555-9012', 'Calle 5 de Mayo #101', 28.0, 185, 90.0, 'Sin adicciones'),
+('Karla', 'Ramírez', '555-3456', 'Calle Hidalgo #567', 24.5, 160, 60.0, 'Fuma diariamente'),
+('Pedro', 'Sánchez', '-', 'Calle Juárez #910', 29.0, 180, 85.0, 'Bebe alcohol regularmente'),
+('Sofía', 'Gómez', '555-7890', 'Av. Revolución #111', 20.0, 155, 50.0, 'Sin adicciones'),
+('Jorge', 'López', '555-2345', 'Calle Independencia #222', 26.0, 172, 75.0, 'Fuma ocasionalmente'),
+('Ana', 'Martínez', '555-6789', 'Calle Morelos #333', 31.0, 190, 100.0, 'Bebe alcohol regularmente'),
+('José', 'González', '-', 'Calle Guerrero #444', 23.0, 178, 70.0, 'Sin adicciones');
 
 INSERT INTO especialidades (nombre) VALUES
 ('Cardiología'),
