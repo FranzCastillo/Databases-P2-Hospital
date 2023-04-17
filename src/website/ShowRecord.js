@@ -23,6 +23,7 @@ function ShowRecord() {
     const [patient, setPatient] = useState({});
     const [records, setRecords] = useState([]);
     const [diseases, setDiseases] = useState([]);
+    const [inheritDiseases, setInheritDiseases] = useState([]);
     const [exams, setExams] = useState([]);
     const [treatments, setTreatments] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -83,9 +84,19 @@ function ShowRecord() {
             }
         });
 
-        supabase
-            .from('enfermedades_heredadas')
-            .select('')
+        supabase.rpc('get_patient_inherited_diseases', {selected_id: 12}).then(({data, error}) => {
+            if (error) {
+                console.log(error);
+            } else {
+                const inheritDiseases = data.map(disease => ({
+                    paciente_id: disease.paciente_id,
+                    nombre: disease.nombre.trim(),
+                }));
+                setInheritDiseases(inheritDiseases);
+                console.log(inheritDiseases);
+            }
+        });
+
 
     }, [userLoaded]);
 
@@ -148,6 +159,12 @@ function ShowRecord() {
                                             </Typography>
                                             <Typography sx={{width: '33%'}}>
                                                 Teléfono: <span style={{fontWeight: "bold"}}>{patient.telefono}</span>
+                                            </Typography>
+                                            <Typography sx={{width: '100%', height: 'auto'}}>
+                                                Enfermedades Heredadas: <br/><span style={{fontWeight: "bold"}}>
+                                                {inheritDiseases.map((disease, index) => (
+                                                    <span key={index}>{disease.nombre}, </span>
+                                                ))} </span>
                                             </Typography>
                                             <Typography sx={{width: '100%'}}>
                                                 ID: <span style={{fontWeight: "bold"}}>{patient.id}</span>
