@@ -10,14 +10,14 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {supabase} from "../supabase/client";
 import {Link} from 'react-router-dom';
 import Autocomplete from "@mui/material/Autocomplete";
 
 const theme = createTheme();
 
-export default function NewPatient() {
+export default function UpdatePatient() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [cellphone, setCellphone] = useState('');
@@ -31,6 +31,7 @@ export default function NewPatient() {
 
 
     const navigate = useNavigate();
+    const {patient_id} = useParams();
 
     useEffect(() => {
         supabase.from('enfermedades').select('id, nombre').then(({data, error}) => {
@@ -49,7 +50,7 @@ export default function NewPatient() {
         try {
             await supabase
                 .from("pacientes")
-                .insert({
+                .update({
                     nombres: firstName,
                     apellidos: lastName,
                     telefono: cellphone,
@@ -58,23 +59,19 @@ export default function NewPatient() {
                     altura_en_cm: height,
                     peso_en_kg: weight,
                     adicciones: adictions
-                });
-            // Gets the id of the patient recently created
-            const patientId = await supabase
-                .from("pacientes")
-                .select("id")
-                .order("id", {ascending: false})
-                .limit(1);
+                })
+                .match({id: patient_id});
             await supabase
                 .from("enfermedades_heredadas")
-                .insert(userDiseases.map((disease) => {
+                .update(userDiseases.map((disease) => {
                     return {
-                        paciente_id: patientId.data[0].id,
+                        paciente_id: patient_id,
                         enfermedad_id: disease.id
                     }
-                } ));
-            alert("Paciente creado con éxito!")
-            navigate('/expedientes/nuevo');
+                }))
+                .match({paciente_id: patient_id});
+            alert("Paciente actualizado con éxito!")
+            navigate('/expedientes/' + patient_id);
 
         } catch (error) {
             console.log(error.message());
@@ -97,7 +94,7 @@ export default function NewPatient() {
                         <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Registrando Nuevo Paciente
+                        Actualizando paciente {patient_id}
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 3}}>
                         <Grid container spacing={2}>
@@ -214,12 +211,12 @@ export default function NewPatient() {
                             variant="contained"
                             sx={{mt: 3, mb: 2}}
                         >
-                            Registrar paciente
+                            Actualizar paciente
                         </Button>
                         <Grid container justifyContent="center">
                             <Grid item>
-                                <Link to="/expedientes/nuevo" variant="body2">
-                                    {"Regresar a un nuevo expediente"}
+                                <Link to={"/expedientes/" + patient_id} variant="body2">
+                                    {"Regresar a expedientes"}
                                 </Link>
                             </Grid>
                         </Grid>
