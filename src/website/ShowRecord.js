@@ -20,7 +20,10 @@ const theme = createTheme();
 function ShowRecord() {
     // user = await getUser();
     const [patient, setPatient] = useState({});
-    let [records, setRecords] = useState([]);
+    const [records, setRecords] = useState([]);
+    const [diseases, setDiseases] = useState([]);
+    const [exams, setExams] = useState([]);
+    const [treatments, setTreatments] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const {id} = useParams();
@@ -51,6 +54,30 @@ function ShowRecord() {
                 console.log(error);
             } else {
                 setPatient(data[0]);
+            }
+        });
+
+        supabase.rpc('get_patient_diseases').then(({data, error}) => {
+            if (error) {
+                console.log(error);
+            } else {
+                setDiseases(data);
+            }
+        });
+
+        supabase.rpc('get_patient_exams').then(({data, error}) => {
+            if (error) {
+                console.log(error);
+            } else {
+                setExams(data);
+            }
+        });
+
+        supabase.rpc('get_patient_treatments').then(({data, error}) => {
+            if (error) {
+                console.log(error);
+            } else {
+                setTreatments(data);
                 setLoading(false);
             }
         });
@@ -161,23 +188,32 @@ function ShowRecord() {
                                                 flexWrap: 'wrap',
                                                 width: '100%'
                                             }}>
-                                                <Typography sx={{width: '100%'}}>
-                                                    Enfermedades Diagnosticadas:
+                                                <Typography sx={{width: '100%', height: 'auto'}}>
+                                                    Enfermedades Diagnosticadas: <br/><span style={{fontWeight: "bold"}}>
+                                                    {diseases.map((disease, index) => ( disease.consulta_id === record.consulta_id &&
+                                                        disease.nombre_enfermedad + ', '
+                                                    ))}</span>
                                                 </Typography>
-                                                <Typography sx={{width: '100%'}}>
-                                                    Enfermedades Diagnosticadas:
+                                                <hr/>
+                                                <Typography sx={{width: '100%', height: 'auto'}}>
+                                                    Exámenes Solicitados: <br/><span style={{fontWeight: "bold"}}>
+                                                    {exams.map((exams, index) => ( exams.consulta_id === record.consulta_id &&
+                                                        exams.nombre_examenes + ', '
+                                                    ))}</span>
                                                 </Typography>
-                                                <Typography sx={{width: '100%'}}>
-                                                    Exámenes Solicitados:
+                                                <hr/>
+                                                <Typography sx={{width: '100%', height: 'auto'}}>
+                                                    Tratamientos Recomendados: <br/><span style={{fontWeight: "bold"}}>
+                                                    {treatments.map((treatment, index) => ( treatment.consulta_id === record.consulta_id &&
+                                                        treatment.nombre_tratamiento + ', '
+                                                    ))}</span>
                                                 </Typography>
+                                                <hr/>
                                                 <Typography sx={{width: '100%'}}>
-                                                    Tratamientos Recomendados:
+                                                    Status: <span style={{fontWeight: "bold"}}>{record.status}</span>
                                                 </Typography>
                                                 <Typography sx={{width: '50%'}}>
-                                                    Status: {record.status}
-                                                </Typography>
-                                                <Typography sx={{width: '50%'}}>
-                                                    Observaciones: {record.observaciones}
+                                                    Observaciones: <span style={{fontWeight: "bold"}}>{record.observaciones}</span>
                                                 </Typography>
                                             </Box>
                                         </AccordionDetails>
