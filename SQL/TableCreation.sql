@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS pacientes(
     telefono VARCHAR(15) DEFAULT '-',
     direccion VARCHAR(100) DEFAULT '-',
     imc numeric(5, 2) DEFAULT -1,
-    altura_en_metros numeric(5, 2) DEFAULT -1,
+    altura_en_cm numeric(5, 2) DEFAULT -1,
     peso_en_kg numeric(5, 2) DEFAULT -1,
     adicciones text DEFAULT 'Sin adicciones'
 );
@@ -64,7 +64,8 @@ CREATE TABLE IF NOT EXISTS trabajos(
 CREATE TABLE IF NOT EXISTS insumos(
     id SERIAL PRIMARY KEY,
     nombre varchar(25) default '-',
-    tipo varchar(10) default 'Materiales'
+    -- Medicinas / Utensilios / Materiales
+    tipo varchar(10) default 'Materiales' 
 );
 
 CREATE INDEX IF NOT EXISTS idx_insumos_id ON insumos(id);
