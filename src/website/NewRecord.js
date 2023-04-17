@@ -112,6 +112,7 @@ function NewRecord() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        const user = await getUser();
         try {
             await supabase
                 .from("consultas")
