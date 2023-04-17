@@ -50,7 +50,7 @@ function NewRecord() {
     useEffect(() => {
         supabase.from('pacientes').select('id, nombres, apellidos').then(({data, error}) => {
             data.forEach((patient) => {
-                patient.label = patient.nombre + ' ' + patient.apellidos;
+                patient.label = patient.nombres + ' ' + patient.apellidos;
             });
             if (error) {
                 alert.log(error);
@@ -131,6 +131,7 @@ function NewRecord() {
                     lugar_id: place.id,
                     observaciones: observations,
                     status_id: userStatus.id,
+                    id_medico: user.id
                 });
             // Gets the id of the consulta recently created
             const consulta_id = await supabase
@@ -168,7 +169,7 @@ function NewRecord() {
                 .from("medicos_tratantes")
                 .insert({
                     consulta_id: consulta_id.data[0].id,
-                    medico_id: user.id,
+                    id_medico: user.id,
                 });
             alert("Consulta creada con éxito!");
             navigate('/expedientes/' + patient.id);
