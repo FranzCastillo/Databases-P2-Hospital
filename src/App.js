@@ -22,6 +22,8 @@ import ReportTwo from "./website/ReportTwo";
 import ReportThree from "./website/ReportThree";
 import ReportFour from "./website/ReportFour";
 import ReportFive from "./website/ReportFive";
+import UpdateRecord from "./website/UpdateRecord";
+import UpdatePatient from "./website/UpdatePatient";
 
 export default function App() {
     const [session, setSession] = useState(null)
@@ -67,8 +69,10 @@ export default function App() {
                 <Route path="/reportes/4" element={<ReportFour/>}/>
                 <Route path="/reportes/5" element={<ReportFive/>}/>
                 <Route path="/expedientes/nuevo" element={<NewRecord/>}/>
+                <Route path="/expedientes/:consulta_id/actualizar" element={<UpdateRecord/>}/>
                 <Route path="/expedientes/:id" element={<ShowRecord/>}/>
-                <Route path="patient/new" element={<NewPatient/>}/>
+                <Route path="/patient/new" element={<NewPatient/>}/>
+                <Route path="/patient/:patient_id/actualizar" element={<UpdatePatient/>}/>
                 <Route path={"/signout"} element={<SignOut/>}/>
                 <Route path="*" element={<NotFound/>}/>
             </Routes>

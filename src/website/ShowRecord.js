@@ -6,13 +6,14 @@ import NavBarAdmin from "./components/NavBarAdmin";
 import {getUser} from "./components/UserInfo";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
 
 const user = getUser();
 const theme = createTheme();
@@ -144,6 +145,7 @@ function ShowRecord() {
                                             <Typography sx={{width: '33%'}}>
                                                 Teléfono: <span style={{fontWeight: "bold"}}>{patient.telefono}</span>
                                             </Typography>
+                                            <Button component={Link} to={`/patient/${id}/actualizar`} variant="contained">Actualizar Expediente</Button>
                                         </Box>
                                     </AccordionDetails>
                                 </Accordion>
@@ -215,6 +217,20 @@ function ShowRecord() {
                                                 <Typography sx={{width: '50%'}}>
                                                     Observaciones: <span style={{fontWeight: "bold"}}>{record.observaciones}</span>
                                                 </Typography>
+                                                <Typography sx={{width: '50%'}}>
+                                                    ID: <span style={{fontWeight: "bold"}}>{record.consulta_id}</span>
+                                                </Typography>
+                                                <Button
+                                                    component={Link}
+                                                    to={`/expedientes/${record.consulta_id}/actualizar`}
+                                                    sx={{
+                                                        position: 'absolute',
+                                                        bottom: '16px',
+                                                        right: '16px',
+                                                    }}
+                                                >
+                                                    Actualizar Expediente
+                                                </Button>
                                             </Box>
                                         </AccordionDetails>
 
