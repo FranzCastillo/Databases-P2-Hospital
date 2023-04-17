@@ -18,12 +18,15 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {useNavigate} from "react-router-dom";
 
-
-const theme = createTheme();
 function Records() {
     const [patients, setPatients] = useState([]);
     const [patient, setPatient] = useState(null);
     const navigate = useNavigate();
+    const theme = createTheme({
+        typography: {
+            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+        }
+    });
 
     // To load the right navbar
     const [rol, setRol] = useState([]);

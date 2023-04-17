@@ -16,7 +16,11 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 
 const user = getUser();
-const theme = createTheme();
+const theme = createTheme({
+    typography: {
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+    }
+});
 
 function ShowRecord() {
     // user = await getUser();
@@ -113,6 +117,7 @@ function ShowRecord() {
     } else {
         return (
             <div sx={{maxWidth: 'lg'}}>
+            <ThemeProvider theme={theme}>
                 {patient === undefined ? (
                     <Typography>No existe el paciente</Typography>
                 ) : (
@@ -279,6 +284,7 @@ function ShowRecord() {
                         </Container>
                     </>
                 )}
+            </ThemeProvider>
             </div>
         );
     }

@@ -15,7 +15,11 @@ import {supabase} from "../supabase/client";
 import {Link} from 'react-router-dom';
 import Autocomplete from "@mui/material/Autocomplete";
 
-const theme = createTheme();
+const theme = createTheme({
+    typography: {
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+    }
+});
 
 export default function NewPatient() {
     const [firstName, setFirstName] = useState('');
@@ -225,6 +229,7 @@ export default function NewPatient() {
                         </Grid>
                     </Box>
                 </Box>
+                <br></br>
             </Container>
         </ThemeProvider>
     );

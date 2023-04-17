@@ -32,7 +32,11 @@ function Copyright(props) {
     );
 }
 
-const theme = createTheme();
+const theme = createTheme({
+    typography: {
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif',
+    }
+});
 
 export default function SignIn() {
     const [email, setEmail] = useState('');
@@ -110,7 +114,7 @@ export default function SignIn() {
                         >
                             Ingresar
                         </Button>
-                        <Grid container justifyContent="flex-end">
+                        <Grid container justifyContent="center">
                             <Grid item>
                                 <Link to="/signup" variant="body2">
                                     {"¿No tienes una cuenta? Regístrate"}
