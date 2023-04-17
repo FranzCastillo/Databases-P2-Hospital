@@ -1,78 +1,107 @@
-INSERT INTO especialidades(nombre) VALUES('Medicina General');
-INSERT INTO especialidades(nombre) VALUES('Cardiología');
-INSERT INTO especialidades(nombre) VALUES('Neurología');
-INSERT INTO especialidades(nombre) VALUES('Pediatría');
-INSERT INTO especialidades(nombre) VALUES('Ginecología');
-INSERT INTO especialidades(nombre) VALUES('Oftalmología');
-INSERT INTO especialidades(nombre) VALUES('Otorrinolaringología');
-INSERT INTO especialidades(nombre) VALUES('Psiquiatría');
-INSERT INTO especialidades(nombre) VALUES('Dermatología');
-INSERT INTO especialidades(nombre) VALUES('Traumatología');
-INSERT INTO especialidades(nombre) VALUES('Urología');
-INSERT INTO especialidades(nombre) VALUES('Gastroenterología');
-INSERT INTO especialidades(nombre) VALUES('Endocrinología');
-INSERT INTO especialidades(nombre) VALUES('Neumología');
-INSERT INTO especialidades(nombre) VALUES('Reumatología');
-INSERT INTO especialidades(nombre) VALUES('Nefrología');
-INSERT INTO especialidades(nombre) VALUES('Oncología');
-INSERT INTO especialidades(nombre) VALUES('Anestesiología');
-INSERT INTO especialidades(nombre) VALUES('Cirugía General');
-INSERT INTO especialidades(nombre) VALUES('Cirugía Plástica');
-INSERT INTO especialidades(nombre) VALUES('Cirugía Maxilofacial');
-INSERT INTO especialidades(nombre) VALUES('Cirugía Cardiovascular');
-INSERT INTO especialidades(nombre) VALUES('Cirugía Torácica');
-INSERT INTO especialidades(nombre) VALUES('Cirugía Vascular');
+INSERT INTO pacientes (nombre, apellidos, telefono, direccion, imc, altura_en_cm, peso_en_kg, adicciones) VALUES
+('Ana', 'García', '555-1234', 'Av. Insurgentes #456', 21.5, 1.70, 65.0, 'Sin adicciones'),
+('Juan', 'Martínez', '555-5678', 'Calle Cuauhtémoc #789', 22.0, 1.75, 70.0, 'Fuma ocasionalmente'),
+('María', 'Hernández', '-', 'Calle Reforma #321', 25.5, 1.68, 80.0, 'Bebe alcohol regularmente'),
+('Luis', 'Pérez', '555-9012', 'Calle 5 de Mayo #101', 28.0, 1.85, 90.0, 'Sin adicciones'),
+('Karla', 'Ramírez', '555-3456', 'Calle Hidalgo #567', 24.5, 1.60, 60.0, 'Fuma diariamente'),
+('Pedro', 'Sánchez', '-', 'Calle Juárez #910', 29.0, 1.80, 85.0, 'Bebe alcohol regularmente'),
+('Sofía', 'Gómez', '555-7890', 'Av. Revolución #111', 20.0, 1.55, 50.0, 'Sin adicciones'),
+('Jorge', 'López', '555-2345', 'Calle Independencia #222', 26.0, 1.72, 75.0, 'Fuma ocasionalmente'),
+('Ana', 'Martínez', '555-6789', 'Calle Morelos #333', 31.0, 1.90, 100.0, 'Bebe alcohol regularmente'),
+('José', 'González', '-', 'Calle Guerrero #444', 23.0, 1.78, 70.0, 'Sin adicciones');
 
-INSERT INTO departamentos(nombre) VALUES('Guatemala');
-INSERT INTO departamentos(nombre) VALUES('El Progreso');
-INSERT INTO departamentos(nombre) VALUES('Sacatepéquez');
-INSERT INTO departamentos(nombre) VALUES('Chimaltenango');
-INSERT INTO departamentos(nombre) VALUES('Escuintla');
-INSERT INTO departamentos(nombre) VALUES('Santa Rosa');
-INSERT INTO departamentos(nombre) VALUES('Sololá');
-INSERT INTO departamentos(nombre) VALUES('Totonicapán');
-INSERT INTO departamentos(nombre) VALUES('Quetzaltenango');
-INSERT INTO departamentos(nombre) VALUES('Suchitepéquez');
+INSERT INTO especialidades (nombre) VALUES
+('Cardiología'),
+('Dermatología'),
+('Endocrinología'),
+('Gastroenterología'),
+('Hematología'),
+('Neumología'),
+('Neurología'),
+('Oftalmología'),
+('Oncología'),
+('Pediatría');
 
-INSERT INTO lugares(nombre, direccion, tipo, departamento_id) VALUES('Hospital Roosevelt', 'Zona 1', 'Hospital', 1);
-INSERT INTO lugares(nombre, direccion, tipo, departamento_id) VALUES('Hospital San Juan de Dios', 'Zona 1', 'Hospital', 1);
+INSERT INTO departamentos (nombre) VALUES
+('Alta Verapaz'),
+('Baja Verapaz'),
+('Chimaltenango'),
+('Chiquimula'),
+('El Progreso'),
+('Escuintla'),
+('Guatemala'),
+('Huehuetenango'),
+('Izabal'),
+('Jalapa'),
+('Jutiapa'),
+('Petén'),
+('Quetzaltenango'),
+('Quiché'),
+('Retalhuleu'),
+('Sacatepéquez'),
+('San Marcos'),
+('Santa Rosa'),
+('Sololá'),
+('Suchitepéquez'),
+('Totonicapán'),
+('Zacapa');
 
-INSERT INTO insumos(nombre, tipo) VALUES('Paracetamol', 'Medicinas');
-INSERT INTO insumos(nombre, tipo) VALUES('Ibuprofeno', 'Medicinas');
-INSERT INTO insumos(nombre, tipo) VALUES('Aspirina', 'Medicinas');
-INSERT INTO insumos(nombre, tipo) VALUES('Dipirona', 'Medicinas');
-INSERT INTO insumos(nombre, tipo) VALUES('Acetaminofén', 'Medicinas');
-INSERT INTO insumos(nombre, tipo) VALUES('Ácido acetilsalicílico', 'Medicinas');
-INSERT INTO insumos(nombre, tipo) VALUES('Bisturi', 'Utensilios');
-INSERT INTO insumos(nombre, tipo) VALUES('Pinzas', 'Utensilios');
-INSERT INTO insumos(nombre, tipo) VALUES('Tijeras', 'Utensilios');
-INSERT INTO insumos(nombre, tipo) VALUES('Cinta adhesiva', 'Utensilios');
-INSERT INTO insumos(nombre, tipo) VALUES('Gasas', 'Utensilios');
-INSERT INTO insumos(nombre, tipo) VALUES('Alcohol', 'Utensilios');
-INSERT INTO insumos(nombre, tipo) VALUES('Agua oxigenada', 'Utensilios');
-INSERT INTO insumos(nombre, tipo) VALUES('Algodón', 'Utensilios');
-INSERT INTO insumos(nombre, tipo) VALUES('Vendas', 'Utensilios');
+INSERT INTO lugares (nombre, direccion, tipo, departamento_id) VALUES
+('Hospital Roosevelt', '12 Avenida 6-17, zona 11', 'Hospital', 7),
+('Hospital General San Juan de Dios', '8a Calle 7-59, zona 1', 'Hospital', 1),
+('Hospital Universitario Esperanza', '15 Avenida 14-01, zona 10', 'Hospital', 7),
+('Hospital Regional de Zacapa', 'Barrio El Calvario, Zacapa', 'Hospital', 22),
+('Hospital Nacional de Chiquimula', '1a Avenida 5-13, zona 2', 'Hospital', 4),
+('Hospital de Retalhuleu', 'Barrio El Centro, Retalhuleu', 'Hospital', 15),
+('Hospital Regional de Occidente', '8a Avenida A 6-16, zona 2, Quetzaltenango', 'Hospital', 13),
+('Hospital Infantil Juan Pablo II', '7a Avenida 6-01, zona 2', 'Hospital', 1),
+('Hospital Nacional de Jutiapa', '5a Calle y 2a Avenida Esquina, zona 1', 'Hospital', 11),
+('Hospital General de Cobán', '3a Calle 5-54, zona 1, Cobán', 'Hospital', 1);
 
--- The tratamientos table contains the names of the treatments
-INSERT INTO tratamientos(nombre, tipo, dosis) VALUES('Cirugía', 'Procedimiento', '-');
-INSERT INTO tratamientos(nombre, tipo, dosis) VALUES('Cirugía de Cataratas', 'Procedimiento', '-');
+INSERT INTO insumos (nombre, tipo) VALUES
+('Guantes', 'Utensilios'),
+('Jeringas', 'Utensilios'),
+('Algodón', 'Materiales'),
+('Vendas', 'Materiales'),
+('Mascarillas', 'Utensilios'),
+('Agua Oxigenada', 'Medicinas'),
+('Alcohol', 'Materiales'),
+('Gasas', 'Materiales'),
+('Termómetros', 'Utensilios'),
+('Suero Fisiológico', 'Medicinas');
 
--- Inserts medicines in the tratamientos table
-INSERT INTO tratamientos(nombre, tipo, dosis) VALUES('Paracetamol', 'Medicina', '1 tableta cada 8 horas');
-INSERT INTO tratamientos(nombre, tipo, dosis) VALUES('Ibuprofeno', 'Medicina', '1 tableta cada 8 horas');
-INSERT INTO tratamientos(nombre, tipo, dosis) VALUES('Aspirina', 'Medicina', '1 tableta cada 8 horas');
-INSERT INTO tratamientos(nombre, tipo, dosis) VALUES('Dipirona', 'Medicina', '1 tableta cada 8 horas');
-INSERT INTO tratamientos(nombre, tipo, dosis) VALUES('Acetaminofén', 'Medicina', '1 tableta cada 8 horas');
-INSERT INTO tratamientos(nombre, tipo, dosis) VALUES('Ácido acetilsalicílico', 'Medicina', '1 tableta cada 8 horas');
+INSERT INTO tratamientos (nombre, tipo, dosis) VALUES
+('Aspirina', 'Medicina', '100mg'),
+('Ibuprofeno', 'Medicina', '400mg'),
+('Paracetamol', 'Medicina', '500mg'),
+('Inyección de Insulina', 'Medicina', '10 unidades'),
+('Radiografía de Torax', 'Procedimiento', '-'),
+('Cirugía de Hernia Inguinal', 'Procedimiento', '-'),
+('Tratamiento de Quimioterapia', 'Procedimiento', '-'),
+('Terapia de Oxigeno', 'Procedimiento', '-'),
+('Extracción de Muela', 'Procedimiento', '-'),
+('Vacuna contra la Influenza', 'Medicina', '-');
 
-INSERT INTO examenes(nombre) VALUES('Rayos X');
-INSERT INTO examenes(nombre) VALUES('Rayos Gamma');
-INSERT INTO examenes(nombre) VALUES('Rayos Ultravioleta');
-INSERT INTO examenes(nombre) VALUES('Rayos Infrarrojos');
+INSERT INTO examenes (nombre) VALUES
+('Análisis de Sangre'),
+('Radiografía de Torax'),
+('Tomografía Computarizada'),
+('Electrocardiograma'),
+('Resonancia Magnética'),
+('Examen de Orina'),
+('Colonoscopía'),
+('Endoscopía'),
+('Mamografía'),
+('Examen de la Vista');
 
-INSERT INTO enfermedades(nombre) VALUES('Cataratas');
-INSERT INTO enfermedades(nombre) VALUES('Glaucoma');
-INSERT INTO enfermedades(nombre) VALUES('Retinopatía diabética');
-INSERT INTO enfermedades(nombre) VALUES('Insuficiencia Renal');
-
-INSERT INTO status(status) VALUES('Fallecido'), ('Enfermo'), ('Recuperado');
+INSERT INTO enfermedades (nombre) VALUES
+('Gripe'),
+('Neumonía'),
+('Dengue'),
+('Hipertensión'),
+('Cáncer'),
+('Diabetes'),
+('VIH/SIDA'),
+('Enfermedad de Alzheimer'),
+('Artritis'),
+('Asma');
