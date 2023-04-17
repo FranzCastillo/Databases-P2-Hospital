@@ -14,7 +14,7 @@ import {useNavigate} from "react-router-dom";
 import {supabase} from "../supabase/client";
 import {Link} from 'react-router-dom';
 import Autocomplete from '@mui/material/Autocomplete';
-import {getUser, setUser, user} from "./components/UserInfo";
+import {createNewUser, getUser, setNewUserPlace, setNewUserSpecialty} from "./components/UserInfo";
 
 function Copyright(props) {
     return (
@@ -60,8 +60,7 @@ export default function SignUp() {
                 });
 
             // Sets the user information in /components/UserInfo.js
-            const user = getUser();
-
+            const user = await createNewUser(email, place.id, specialty.id);
             await supabase
                 .from("especializados")
                 .insert({
@@ -76,6 +75,8 @@ export default function SignUp() {
                     lugar_id: user.place,
                 })
 
+
+            console.log("User created: ", user);
             await supabase.auth.signUp({
                 email: email,
                 password: password,

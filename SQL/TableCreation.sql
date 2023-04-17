@@ -173,6 +173,5 @@ CREATE TABLE IF NOT EXISTS bitacora_medicos (
 );
 
 --tablas modificadas para el funcionamiento de la bitacora
-DROP TABLE bitacora;
 ALTER TABLE consultas ADD id_medico INTEGER;
 ALTER TABLE consultas ADD CONSTRAINT fk_id_medico FOREIGN KEY (id_medico) REFERENCES medicos (id);
