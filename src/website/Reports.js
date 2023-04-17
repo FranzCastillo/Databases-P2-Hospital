@@ -83,7 +83,7 @@ function Reports() {
                                         required
                                         id="combo-box-places"
                                         options={options}
-                                        renderInput={(params) => <TextField {...params} label="Establecimiento"/>}
+                                        renderInput={(params) => <TextField {...params} label="Seleccionar reporte"/>}
                                         onChange={(event, value) => setOption(value)}
                                     />
                                 </Grid>

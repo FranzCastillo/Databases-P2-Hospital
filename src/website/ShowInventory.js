@@ -19,6 +19,11 @@ import Autocomplete from '@mui/material/Autocomplete';
 import VaccinesIcon from '@mui/icons-material/Vaccines';
 import {green} from '@mui/material/colors';
 
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 function ShowInventory() {
     const user = getUser();
     const theme = createTheme({
@@ -67,24 +72,72 @@ function ShowInventory() {
         <br></br>
         <div className='divNewPage'>
             <ThemeProvider theme={theme}>
-                <Typography variant="h5">{place} <br/> <br/> </Typography>
-                    {inputs.length === 0 ? (
-                        <Typography>No hay inventario</Typography>
-                        ) : (
-                            <>
-                                {inputs.map(input => (
-                                    <Typography sx={{width: '33%', flexShrink: 0}}>
-                                        ID insumo: {input.insumo_id} <br/>
-                                        Nombre insumo: {input.nombre_insumo} <br/>
-                                        Tipo: {input.tipo} <br/>
-                                        Cantidad inicial: {input.cantidad_inicial} <br/>
-                                        Cantidad actual: {input.cantidad_actual} <br/>
-                                        {input.cantidad_actual / input.cantidad_inicial < 0.15 ? <p className='red'> ADVERTENCIA: queda menos del 15% del insumo </p> : null}
-                                        <hr/>
-                                    </Typography>
-                                    ))}
-                                </>
-                            )}
+                <Container maxWidth="lg">
+                    <Typography sx={{width: '33%', flexShrink: 0}} variant="h5">
+                        {place} <br/> <br/>
+                    </Typography>
+                                {inputs.length === 0 ? (
+                                <Typography>No hay inventario</Typography>
+                                ) : (
+                                    <>
+                                        {inputs.map(input => (
+                                            <Accordion
+                                            //key={index}
+                                            //expanded={expanded === `panel${index}`}
+                                            //onChange={handleChange(`panel${index}`)}
+                                        >
+                                            <AccordionSummary
+                                                expandIcon={<ExpandMoreIcon/>}
+                                                //aria-controls={`panel${index}bh-content`}
+                                                //id={`panel${index}bh-header`}
+                                                sx={{width: '100%'}}
+                                            >
+                                                <Box sx={{
+                                                    display: 'flex',
+                                                    flexDirection: 'row',
+                                                    alignItems: 'center',
+                                                    width: '100%'
+                                                }}>
+                                                    <Typography sx={{width: '33%'}}>
+                                                    <span style={{fontWeight: "bold"}}>{input.nombre_insumo} </span>
+                                                    </Typography>
+                                                    <Typography sx={{width: '50%'}}>
+                                                        ID: <span style={{fontWeight: "bold"}}>{input.insumo_id}</span>
+                                                    </Typography>
+                                                </Box>
+                                            </AccordionSummary>
+
+                                            <AccordionDetails>
+                                                <Box sx={{
+                                                    display: 'flex',
+                                                    flexDirection: 'row',
+                                                    alignItems: 'center',
+                                                    flexWrap: 'wrap',
+                                                    width: '100%'
+                                                }}>
+                                                    <Typography sx={{width: '100%', height: 'auto'}}>
+                                                        Tipo: {input.tipo}
+                                                    </Typography>
+                                                    <hr/>
+                                                    <Typography sx={{width: '100%', height: 'auto'}}>
+                                                        Cantidad inicial: {input.cantidad_inicial}
+                                                    </Typography>
+                                                    <hr/>
+                                                    <Typography sx={{width: '100%', height: 'auto'}}>
+                                                        Cantidad actual: {input.cantidad_actual}
+                                                    </Typography>
+                                                    <hr/>
+                                                    <Typography sx={{width: '100%', height: 'auto'}}>
+                                                    {input.cantidad_actual / input.cantidad_inicial < 0.15 ? <p className='red'> ADVERTENCIA: queda menos del 15% del insumo </p> : null}
+                                                    </Typography>
+                                                    <hr/>
+                                                </Box>
+                                            </AccordionDetails>
+                                        </Accordion>
+                                            ))}
+                                        </>
+                                    )}
+                </Container>
             </ThemeProvider>
         </div>
         

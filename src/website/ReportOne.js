@@ -74,8 +74,8 @@ function ReportOne() {
               <TableHead>
 
                   <TableRow>
-                    <TableCell align="center">ID</TableCell>
                     <TableCell align="center">Enfermedad</TableCell>
+                    <TableCell align="center">Pacientes fallecidos</TableCell>
                   </TableRow>
 
                 </TableHead>
@@ -86,8 +86,8 @@ function ReportOne() {
                       key={dato.name}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
-                      <TableCell align="center">{dato.id}</TableCell>
                       <TableCell align="center">{dato.enfermedad}</TableCell>
+                      <TableCell align="center">{dato.muertes}</TableCell>
                     </TableRow>
                   ))}
               </TableBody>
