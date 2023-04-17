@@ -85,6 +85,7 @@ export default function SignUp() {
             });
 
             alert("Bienvenido!")
+            navigate("/home")
 
         } catch (error) {
             console.log(error);
