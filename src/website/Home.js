@@ -18,13 +18,6 @@ function createData(name,calories,fat,carbs,protein,) {
     return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
 
 function BasicTable(filas) {
@@ -89,7 +82,7 @@ const box = () => {
                 <p style={{color:'white'}}>Bienvenido al software de salud diseñado especialmente para médicos como tú. Nuestra herramienta es una solución integral para la gestión de pacientes, historiales médicos, y citas</p>
                 <div style={{display:'flex', justifyContent: 'right', padding:'20px' }}>
                     <div id='buttonWrapper' style = {{backgroundColor:'#0072c6', height:'20px', display:'flex', alignItems:'center', borderRadius:'5px', padding:'7px'}}>
-                        <a style ={{color:'white'}} /*onClick={}*/ >Nueva Consulta</a>
+                        <a style ={{color:'white'}} /*onClick={navigate()}*/ >Nueva Consulta</a>
                     </div>
                 </div>
             </div>
