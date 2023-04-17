@@ -15,6 +15,7 @@ import NewRecord from "./website/NewRecord";
 import NewPatient from "./website/NewPatient";
 import SignOut from "./website/SignOut";
 import ShowRecord from "./website/ShowRecord";
+import ShowInventory from "./website/ShowInventory";
 
 
 export default function App() {
@@ -49,6 +50,7 @@ export default function App() {
                 <Route path="/" element={<Home/>}/>
                 <Route path="/home" element={<Home/>}/>
                 <Route path="/inventario" element={<Inventory/>}/>
+                <Route path="/inventario/:id" element={<ShowInventory/>}/>
                 <Route path="/expedientes" element={<Records/>}/>
                 <Route path="/medicos" element={<Medics/>}/>
                 <Route path="/bitacora" element={<Logs/>}/>
