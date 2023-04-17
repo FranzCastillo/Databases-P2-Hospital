@@ -14,7 +14,7 @@ import {useNavigate} from "react-router-dom";
 import {supabase} from "../supabase/client";
 import {Link} from 'react-router-dom';
 import Autocomplete from '@mui/material/Autocomplete';
-import {createNewUser, getUser, setNewUserPlace, setNewUserSpecialty} from "./components/UserInfo";
+import {createNewUser} from "./components/UserInfo";
 
 function Copyright(props) {
     return (
