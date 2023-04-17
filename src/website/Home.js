@@ -13,7 +13,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
-import { padding } from '@mui/system';
 
 function createData(name,calories,fat,carbs,protein,) {
     return { name, calories, fat, carbs, protein };
@@ -27,38 +26,47 @@ const rows = [
     createData('Gingerbread', 356, 16.0, 49, 3.9),
 ];
 
-function BasicTable() {
-    return (
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>Dessert (100g serving)</TableCell>
-                        <TableCell align="right">Calories</TableCell>
-                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <TableRow
-                            key={row.name}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell component="th" scope="row">
-                                {row.name}
-                            </TableCell>
-                            <TableCell align="right">{row.calories}</TableCell>
-                            <TableCell align="right">{row.fat}</TableCell>
-                            <TableCell align="right">{row.carbs}</TableCell>
-                            <TableCell align="right">{row.protein}</TableCell>
+
+function BasicTable(filas) {
+    if (filas === null || filas.length === 0) {
+        return(
+            <div>
+                <h3>Todavía no tienes consultas.</h3>
+            </div>
+        );
+    }else{
+        return (
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Nombre</TableCell>
+                            <TableCell align="right">Apellidos</TableCell>
+                            <TableCell align="right">Hospital</TableCell>
+                            <TableCell align="right">Observaciones</TableCell>
+                            <TableCell align="right">Status</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
+                    </TableHead>
+                    <TableBody>
+                        {filas.map((row) => (
+                            <TableRow
+                                key={row.nombres}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row">
+                                    {row.nombres}
+                                </TableCell>
+                                <TableCell align="right">{row.apellidos}</TableCell>
+                                <TableCell align="right">{row.lugar_nombre}</TableCell>
+                                <TableCell align="right">{row.observaciones}</TableCell>
+                                <TableCell align="right">{row.status}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        );
+    }
 }
 
 const card = (name, lastName,email) => {
@@ -74,6 +82,8 @@ const card = (name, lastName,email) => {
 }
 
 
+
+
 function Home() {
     const navigate = useNavigate();
     const [email, setEmail] = useState(null);
@@ -83,6 +93,10 @@ function Home() {
     // To load the right navbar
     const [rol, setRol] = useState([]);
     const [userLoaded, setUserLoaded] = useState(false);
+    const [rows, setRows] = useState(null);
+    const [doctorId, setDoctorId] = useState(null);
+
+
     useEffect(() => {
         getUser().then(objeto => {
             setRol(objeto["rol"]);
@@ -124,6 +138,20 @@ function Home() {
         user2.then(response => setName(response["nombres"]));
 
         user2.then(response => setLastName(response["apellidos"]));
+
+        user2.then(response => setDoctorId(response["id"]));
+    }, [userLoaded]);
+
+    useEffect(() => {
+        supabase.rpc('get_consultas2', {id_medico_param: doctorId}).then(({ data, error }) => {
+            if (error) {
+                console.log(error);
+            }else{
+                console.log(data);
+                console.log(doctorId);
+                setRows(data);
+            }
+        })
     }, [userLoaded]);
 
     return (
@@ -133,7 +161,7 @@ function Home() {
             <div className='ContentContainer' style={{marginLeft: '25%', marginRight: '25%', height: '100%'}}>
                 <h1>Mis Consultas</h1>
                 <div className='TableContainer' >
-                    {BasicTable()}
+                    {BasicTable(rows)}
                 </div>
             </div>
 
