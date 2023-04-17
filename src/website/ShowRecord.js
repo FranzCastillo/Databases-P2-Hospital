@@ -166,6 +166,9 @@ function ShowRecord() {
                                                     <span key={index}>{disease.nombre}, </span>
                                                 ))} </span>
                                             </Typography>
+                                            <Typography sx={{width: '33%'}}>
+                                                Adicciones: <span style={{fontWeight: "bold"}}>{patient.adicciones}</span>
+                                            </Typography>
                                             <Typography sx={{width: '100%'}}>
                                                 ID: <span style={{fontWeight: "bold"}}>{patient.id}</span>
                                             </Typography>
