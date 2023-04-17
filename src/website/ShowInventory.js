@@ -28,47 +28,57 @@ function ShowInventory() {
     });
     //const navigate = useNavigate();
     const [inputs, setInputs] = useState([]);
+    const [place, setPlace] = useState([]);
 
     const {id} = useParams();
 
     useEffect(() => {
-        //alert(typeof id)
-        supabase.rpc('getinsumos', {selected_id: 1}).then(({data, error}) => {
+        supabase.rpc('getinsumos', {selected_id: parseInt(id)}).then(({data, error}) => {
             if (error) {
                 console.log(error);
             } else {
                 setInputs(data);
             }
         })
-        console.log(inputs)
-    }, []);
+
+        supabase.from('lugares').select('nombre').eq('id', id).then(({data, error}) => {
+            if (error) {
+                console.log(error);
+                
+            } else {
+                setPlace(data[0].nombre)
+            }
+        })
+        
+    }, [inputs]);
 
   return (
-    <div>ShowInventory
-
-        {inputs && (
-                <>
-                    {
-                        inputs.map(input => (
+    <div>
+        {user.role === "admin" ? <NavBarUser/> : <NavBarAdmin/>}
+        <br></br>
+        <div className='divNewPage'>
+            <ThemeProvider theme={theme}>
+                <Typography variant="h5">{place} <br/> <br/> </Typography>
+                    {inputs.length === 0 ? (
+                        <Typography>No hay inventario</Typography>
+                        ) : (
                             <>
-                                <div className='records'>
-                                    <b> ID insumo: </b> <a> {input.insumo_id} </a>
-                                    <br></br>
-                                    <b> Nombre insumo: </b> <a> {input.nombre} </a>
-                                    <br></br>
-                                    <b> Tipo: </b> <a> {input.tipo} </a>
-                                    <br></br>
-                                    <b> Cantidad inicial </b> <a> {input.cantidad_inicial} </a>
-                                    <br></br>
-                                    <b> Cantidad actual: </b> <a> {input.cantidad_actual} </a>
-                                    <br></br>
-                                </div>
-                                <br></br>
-                            </>
-                        ))
-                    }
-                </>
-            )}  
+                                {inputs.map(input => (
+                                    <Typography sx={{width: '33%', flexShrink: 0}}>
+                                        ID insumo: {input.insumo_id} <br/>
+                                        Nombre insumo: {input.nombre_insumo} <br/>
+                                        Tipo: {input.tipo} <br/>
+                                        Cantidad inicial: {input.cantidad_inicial} <br/>
+                                        Cantidad actual: {input.cantidad_actual} <br/>
+                                        {input.cantidad_actual / input.cantidad_inicial < 0.15 ? <p className='red'> ADVERTENCIA: queda menos del 15% del insumo </p> : null}
+                                        <hr/>
+                                    </Typography>
+                                    ))}
+                                </>
+                            )}
+            </ThemeProvider>
+        </div>
+        
 
     </div>
   )

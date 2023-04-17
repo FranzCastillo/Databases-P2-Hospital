@@ -30,16 +30,23 @@ function Inventory() {
     });
     const [options, setOptions] = useState([]);
     const [place, setPlace] = useState([]);
-    const [id, setId] = useState([]);
+    const [id, setID] = useState([]);
     
-
-
     //Al darle click al boton:
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const {data: placeID} = await supabase.from('lugares').select('id').eq('nombre', place);
-        setId(placeID.map(id => id.id))
-        navigate('/inventario/' + id.toString());
+        //const {data: placeID} = await supabase.from('lugares').select('id').eq('nombre', place);
+        //setId(placeID.map(id => id.id))
+        supabase.from('lugares').select('id').eq('nombre', place).then(({data, error}) => {
+            if (error) {
+                console.log(error);
+                
+            } else {
+                setID(data[0].id)
+                navigate('/inventario/' + data[0].id);
+            }
+        })
+        
     }
 
     useEffect(() => {
@@ -52,9 +59,7 @@ function Inventory() {
 
         getOptions();
 
-    }, []);
-
-
+    }, [id]);
 
     return (
         <div>
