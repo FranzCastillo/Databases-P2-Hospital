@@ -82,6 +82,11 @@ function ShowRecord() {
                 setLoading(false);
             }
         });
+
+        supabase
+            .from('enfermedades_heredadas')
+            .select('')
+
     }, [userLoaded]);
 
     // FOR THE ACCORDION
@@ -114,7 +119,6 @@ function ShowRecord() {
                                             Expediente <br/><span
                                             style={{fontWeight: "bold"}}>{patient.nombres} {patient.apellidos}</span>
                                         </Typography>
-
                                         <Typography sx={{color: 'text.secondary'}}>Información del paciente</Typography>
                                     </AccordionSummary>
                                     <AccordionDetails>
@@ -145,7 +149,20 @@ function ShowRecord() {
                                             <Typography sx={{width: '33%'}}>
                                                 Teléfono: <span style={{fontWeight: "bold"}}>{patient.telefono}</span>
                                             </Typography>
-                                            <Button component={Link} to={`/patient/${id}/actualizar`} variant="contained">Actualizar Expediente</Button>
+                                            <Typography sx={{width: '100%'}}>
+                                                ID: <span style={{fontWeight: "bold"}}>{patient.id}</span>
+                                            </Typography>
+                                            <Button
+                                                component={Link}
+                                                to={`/patient/${id}/actualizar`}
+                                                sx={{
+                                                    position: 'absolute',
+                                                    bottom: '16px',
+                                                    right: '16px',
+                                                }}
+                                            >
+                                                Actualizar Expediente
+                                            </Button>
                                         </Box>
                                     </AccordionDetails>
                                 </Accordion>
@@ -229,7 +246,7 @@ function ShowRecord() {
                                                         right: '16px',
                                                     }}
                                                 >
-                                                    Actualizar Expediente
+                                                    Actualizar Consulta
                                                 </Button>
                                             </Box>
                                         </AccordionDetails>

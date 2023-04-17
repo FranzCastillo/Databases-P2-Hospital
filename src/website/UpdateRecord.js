@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {supabase} from "../supabase/client";
 import Autocomplete from '@mui/material/Autocomplete';
 import {getUser} from "./components/UserInfo";
@@ -300,6 +300,13 @@ function NewRecord() {
                             >
                                 Registrar Consulta
                             </Button>
+                            <Grid container justifyContent="center">
+                                <Grid item>
+                                    <Link to={"/expedientes"} variant="body2">
+                                        {"Regresar a expedientes"}
+                                    </Link>
+                                </Grid>
+                            </Grid>
                         </Box>
                     </Box>
                 </Container>
