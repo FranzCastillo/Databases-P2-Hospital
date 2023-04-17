@@ -102,7 +102,7 @@ function ShowInventory() {
                                                     <span style={{fontWeight: "bold"}}>{input.nombre_insumo} </span>
                                                     </Typography>
                                                     <Typography sx={{width: '50%'}}>
-                                                        ID: <span style={{fontWeight: "bold"}}>{input.insumo_id}</span>
+                                                        {input.cantidad_actual / input.cantidad_inicial < 0.15 ? <p className='red'> ADVERTENCIA: queda menos del 15% del insumo </p> : null}
                                                     </Typography>
                                                 </Box>
                                             </AccordionSummary>
@@ -116,6 +116,10 @@ function ShowInventory() {
                                                     width: '100%'
                                                 }}>
                                                     <Typography sx={{width: '100%', height: 'auto'}}>
+                                                        ID: {input.insumo_id}
+                                                    </Typography>
+                                                    <hr/>
+                                                    <Typography sx={{width: '100%', height: 'auto'}}>
                                                         Tipo: {input.tipo}
                                                     </Typography>
                                                     <hr/>
@@ -125,10 +129,6 @@ function ShowInventory() {
                                                     <hr/>
                                                     <Typography sx={{width: '100%', height: 'auto'}}>
                                                         Cantidad actual: {input.cantidad_actual}
-                                                    </Typography>
-                                                    <hr/>
-                                                    <Typography sx={{width: '100%', height: 'auto'}}>
-                                                    {input.cantidad_actual / input.cantidad_inicial < 0.15 ? <p className='red'> ADVERTENCIA: queda menos del 15% del insumo </p> : null}
                                                     </Typography>
                                                     <hr/>
                                                 </Box>
