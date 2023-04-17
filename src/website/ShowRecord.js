@@ -14,22 +14,23 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const user = getUser();
 const theme = createTheme();
+
 function ShowRecord() {
     // user = await getUser();
-    const [patient, setPatient] = useState(null);
+    const [patient, setPatient] = useState({});
+    const [records, setRecords] = useState([]);
+    let [fullRecords, setFullRecords] = useState({});
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
         supabase.from('pacientes').select('id, nombre, apellidos').eq('id', id).then(({data, error}) => {
             if (error) {
                 console.log(error);
             } else {
-                console.log(data[0]);
                 setPatient(data[0]);
             }
         })
-    }, []);
 
-    const [records, setRecords] = useState([]);
-    useEffect(() => {
         supabase.from('consultas')
             .select('*')
             .eq('paciente_id', id)
@@ -37,11 +38,29 @@ function ShowRecord() {
                 if (error) {
                     console.log(error);
                 } else {
-                    console.log(data);
                     setRecords(data);
                 }
             })
-    },[]);
+
+        setLoading(false);
+    }, []);
+
+    useEffect(() => {
+        fullRecords = records.map(async (record) => {
+            return {
+                ...record,
+                doctor: await supabase.from('medicos').select('nombre, apellidos').eq('id', record.medico_id)
+            }
+        })
+        supabase.from('medicos')
+            .select('*')
+            .eq('id', records.medico_id)
+    }, [patient, records]);
+
+    useEffect(() => {
+        console.log("Paciente: ", patient);
+        console.log("Consultas: ", records);
+    }, [patient, records]);
 
     const navigate = useNavigate();
     const {id} = useParams();
@@ -54,37 +73,52 @@ function ShowRecord() {
     };
     // --------------------------------------------
 
-    return (
-        <div>
-            {patient === undefined ? (
-                <Typography>No existe el paciente</Typography>
-            ) : (
-                <>
-                    <Typography variant="h5">{patient.nombre}</Typography>
-                    {records.length === 0 ? (
-                        <Typography>No hay registros</Typography>
-                    ) : (
-                        <>
-                            {records.map((record, index) => (
-                                <Accordion
-                                    key={index}
-                                    expanded={expanded === `panel${index}`}
-                                    onChange={handleChange(`panel${index}`)}
-                                >
-                                    <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls={`panel${index}bh-content`} id={`panel${index}bh-header`}>
-                                        <Typography sx={{ width: '33%', flexShrink: 0 }}>{record.date}</Typography>
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                                        <Typography>{record.details}</Typography>
-                                    </AccordionDetails>
-                                </Accordion>
-                            ))}
-                        </>
-                    )}
-                </>
-            )}
-        </div>
-    );
+    // console.log("Paciente: ", patient);
+    // console.log("Consultas: ", records);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    } else {
+        return (
+            <div>
+                {patient === undefined ? (
+                    <Typography>No existe el paciente</Typography>
+                ) : (
+                    <>
+                        {user.role === "admin" ? <NavBarUser/> : <NavBarAdmin/>}
+                        <Typography variant="h5">{patient.nombre}</Typography>
+                        {records.length === 0 ? (
+                            <Typography>No hay registros</Typography>
+                        ) : (
+                            <>
+                                {records.map((record, index) => (
+                                    <Accordion
+                                        key={index}
+                                        expanded={expanded === `panel${index}`}
+                                        onChange={handleChange(`panel${index}`)}
+                                    >
+                                        <AccordionSummary expandIcon={<ExpandMoreIcon/>}
+                                                          aria-controls={`panel${index}bh-content`}
+                                                          id={`panel${index}bh-header`}>
+                                            <Typography sx={{width: '33%', flexShrink: 0}}>
+                                                Fecha de la consulta: {new Date(record.fecha).toLocaleDateString()}
+                                                <br/>
+                                                Hora de la consulta: {new Date(record.fecha).toLocaleTimeString()} <br/>
+                                                Doctor: {record.doctor}
+                                            </Typography>
+                                        </AccordionSummary>
+                                        <AccordionDetails>
+                                            <Typography>{record.details}</Typography>
+                                        </AccordionDetails>
+                                    </Accordion>
+                                ))}
+                            </>
+                        )}
+                    </>
+                )}
+            </div>
+        );
+    }
 }
 
 export default ShowRecord
