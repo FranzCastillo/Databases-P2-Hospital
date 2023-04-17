@@ -13,6 +13,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Avatar from '@mui/material/Avatar';
+import { padding } from '@mui/system';
 
 function createData(name,calories,fat,carbs,protein,) {
     return { name, calories, fat, carbs, protein };
@@ -60,20 +61,18 @@ return (
 );
 }
 
-const card = () => {
+const card = (name, lastName,email) => {
     return (
-        <div style={{position: 'absolute'}}>
+        <div style={{ marginLeft:'25px', marginTop: '25px',position: 'absolute', display:'flex', flexDirection:'row'}}>
             <Avatar src = "https://user-images.githubusercontent.com/11250/39013954-f5091c3a-43e6-11e8-9cac-37cf8e8c8e4e.jpg"/>
-            <h4></h4>
+            <div id = 'info' style={{paddingLeft:'5px'}}>
+                <h5 style={{marginTop:'0', marginBottom: '0'}}>{name} {lastName}</h5>
+                <h5 style={{fontWeight:'normal', marginTop:'0',marginBottom:'0'}}>{email}</h5>
+            </div>
         </div>
     );
 }
 
-const getData = async () => {    
-    const user = getUser();
-    console.log('corrio');
-    console.log(user);
-}
 
 function Home() {
     const navigate = useNavigate();
@@ -81,15 +80,13 @@ function Home() {
     const [name, setName] = useState(null);
     const [lastName, setLastName] = useState(null);
     const user = getUser();
-    const [rol, setRol] = useState([]);
+    const [rol, setRol] = useState([]); 
+    
+
     user.then(objeto => {
         setRol(objeto["rol"]);
-        console.log(rol); // "admin"
+        console.log(rol); // "admin"        
     });
-    
-    console.log('1');
-    getData();
-    console.log('2');
 
     async function redirectPage() {
         await supabase.auth.signOut();
@@ -110,14 +107,21 @@ function Home() {
             setEmail(email);        
         };
         fetchEmail();
-        
+
     }, [navigate]);
+
+    useEffect(() => {
+        //obtener nombres y apellidos del usuario
+        const user2 = getUser()
+        user2.then(response => setName(response["nombres"]));
+        
+        user2.then(response => setLastName(response["apellidos"]));
+      }, []);
     
     return (
         <div>
-            {rol === "admin" ? <NavBarAdmin/> : <NavBarUser/>}
-            <h1> Bienvenidx, {getUser().correo}, {email} </h1>
-
+            {rol === "admin" ? <NavBarAdmin/> : <NavBarUser/>}            
+            {card(name, lastName, email)}
             <div className='ContentContainer' style={{marginLeft: '25%', marginRight: '25%', height: '100%'}}>
                 <h1>Mis Consultas</h1>
                 <div className='TableContainer' >
