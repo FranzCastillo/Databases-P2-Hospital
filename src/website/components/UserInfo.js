@@ -11,8 +11,11 @@ const setUserEmail = (newEmail) => {
     email = newEmail;
 };
 
-const getUser = async (emailParam) => {
-    setUserEmail(emailParam);
+const getUser = async () => {
+    setUserEmail();
+
+    const session = await supabase.auth.getSession();
+    setUserEmail(session.data.session.user.email);
 
     const medic = await supabase
         .from("medicos")
@@ -47,10 +50,4 @@ const createNewUser = async (emailParam, placeParam, specialtyParam) => {
     return user;
 }
 
-const setNewUserPlace = async (place) => {
-}
-
-const setNewUserSpecialty = async (specialty) => {
-}
-
-export { getUser, setUserEmail, createNewUser, setNewUserPlace, setNewUserSpecialty};
+export { getUser, setUserEmail, createNewUser};
