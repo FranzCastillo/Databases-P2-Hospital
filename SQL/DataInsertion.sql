@@ -105,3 +105,8 @@ INSERT INTO enfermedades (nombre) VALUES
 ('Enfermedad de Alzheimer'),
 ('Artritis'),
 ('Asma');
+
+INSERT INTO status (status) VAlUES
+('Enfermo'),
+('Recuperado'),
+('Fallecido');	
