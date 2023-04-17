@@ -31,6 +31,11 @@ function Inventory() {
     const [options, setOptions] = useState([]);
     const [place, setPlace] = useState([]);
     const [id, setID] = useState([]);
+    const [rol, setRol] = useState([]);
+    user.then(objeto => {
+        setRol(objeto["rol"]);
+        console.log(rol); // "admin"
+    });
     
     //Al darle click al boton:
     const handleSubmit = async (e) => {
@@ -68,7 +73,7 @@ function Inventory() {
 
     return (
         <div>
-            {user.role === "admin" ? <NavBarUser/> : <NavBarAdmin/>}
+            {rol === "admin" ? <NavBarAdmin/> : <NavBarUser/>}
 
             <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth={"xs"}>

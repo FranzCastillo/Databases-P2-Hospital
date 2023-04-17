@@ -81,6 +81,11 @@ function Home() {
     const [name, setName] = useState(null);
     const [lastName, setLastName] = useState(null);
     const user = getUser();
+    const [rol, setRol] = useState([]);
+    user.then(objeto => {
+        setRol(objeto["rol"]);
+        console.log(rol); // "admin"
+    });
     
     console.log('1');
     getData();
@@ -110,7 +115,7 @@ function Home() {
     
     return (
         <div>
-            {user.role === "admin" ? <NavBarUser/> : <NavBarAdmin/>}
+            {rol === "admin" ? <NavBarAdmin/> : <NavBarUser/>}
             <h1> Bienvenidx, {getUser().correo}, {email} </h1>
 
             <div className='ContentContainer' style={{marginLeft: '25%', marginRight: '25%', height: '100%'}}>

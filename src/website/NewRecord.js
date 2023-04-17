@@ -34,6 +34,11 @@ function NewRecord() {
     const [statuses, setStatuses] = useState([]);
     const [userStatus, setUserStatus] = useState([]);
     const [observations, setObservations] = useState('');
+    const [rol, setRol] = useState([]);
+    user.then(objeto => {
+        setRol(objeto["rol"]);
+        console.log(rol); // "admin"
+    });
 
     const navigate = useNavigate();
 
@@ -173,7 +178,7 @@ function NewRecord() {
 
     return (
         <div>
-            {user.role === "admin" ? <NavBarUser/> : <NavBarAdmin/>}
+            {rol === "admin" ? <NavBarAdmin/> : <NavBarUser/>}
             <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth={"xs"}>
                     <CssBaseline/>

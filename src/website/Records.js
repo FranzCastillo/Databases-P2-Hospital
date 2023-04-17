@@ -24,6 +24,11 @@ const theme = createTheme();
 function Records() {
     const [patients, setPatients] = useState([]);
     const [patient, setPatient] = useState(null);
+    const [rol, setRol] = useState([]);
+    user.then(objeto => {
+        setRol(objeto["rol"]);
+        console.log(rol); // "admin"
+    });
 
     const navigate = useNavigate();
 
@@ -48,7 +53,7 @@ function Records() {
     console.log(user);
     return (
         <div>
-            {user.role === "admin" ? <NavBarAdmin/> : <NavBarUser/>}
+            {rol === "admin" ? <NavBarAdmin/> : <NavBarUser/>}
             <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth={"xs"}>
                     <CssBaseline/>

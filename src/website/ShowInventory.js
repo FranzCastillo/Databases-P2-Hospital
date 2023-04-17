@@ -29,6 +29,11 @@ function ShowInventory() {
     //const navigate = useNavigate();
     const [inputs, setInputs] = useState([]);
     const [place, setPlace] = useState([]);
+    const [rol, setRol] = useState([]);
+    user.then(objeto => {
+        setRol(objeto["rol"]);
+        console.log(rol); // "admin"
+    });
 
     const {id} = useParams();
 
@@ -54,7 +59,7 @@ function ShowInventory() {
 
   return (
     <div>
-        {user.role === "admin" ? <NavBarUser/> : <NavBarAdmin/>}
+        {rol === "admin" ? <NavBarAdmin/> : <NavBarUser/>}
         <br></br>
         <div className='divNewPage'>
             <ThemeProvider theme={theme}>
