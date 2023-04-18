@@ -12,6 +12,7 @@ FOR EACH ROW
 EXECUTE FUNCTION prevent_delete();
 
 --Trigger para la tabla medicos que registra los cambios en la tabla bitacora_medicos
+--Trigger para la tabla medicos que registra los cambios en la tabla bitacora_medicos
 CREATE OR REPLACE FUNCTION bitacora_medicos_change_log()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -42,7 +43,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE TRIGGER bitacora_consultas_change_log_trigger
+CREATE TRIGGER bitacora_consultas_change_log_trigger
 AFTER INSERT OR UPDATE OR DELETE
 ON consultas
 FOR EACH ROW
