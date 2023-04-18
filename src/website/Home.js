@@ -27,6 +27,7 @@ function BasicTable(filas) {
         if(filas.length > 5 ){
             filas = filas.slice(0,5);
         }
+        filas.reverse();
         return (            
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
