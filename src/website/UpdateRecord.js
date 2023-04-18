@@ -124,7 +124,8 @@ function NewRecord() {
         event.preventDefault();
         const user = await getUser();
         try {
-            await supabase
+            console.log("1. Success",patient.id, place.id, observations, userStatus.id, user.id, consulta_id);
+            const {data1, error1} = await supabase
                 .from("consultas")
                 .update({
                     paciente_id: patient.id,
@@ -132,10 +133,12 @@ function NewRecord() {
                     observaciones: observations,
                     status_id: userStatus.id,
                     id_medico: user.id,
-                    fecha: new Date().toLocaleString('es-GT', {timeZone: 'America/Guatemala'}),
+                    fecha: new Date(),
                 })
                 .match({id: consulta_id});
-
+            if (error1) {
+                console.log("1.",error1);
+            }
             for (const disease of userDiseases) {
                 const {data, error} = await supabase
                     .from("enfermedades_diagnosticadas")
@@ -169,13 +172,15 @@ function NewRecord() {
                     console.log("TREATMENTS",error);
                 }
             }
-            await supabase
+            const{data2, error2} = await supabase
                 .from("medicos_tratantes")
                 .update({
                     medico_id: user.id,
                 })
                 .match({consulta_id: consulta_id});
-
+            if (error2) {
+                console.log("MEDICOS",error2);
+            }
             alert("Consulta actualizada con éxito!");
             navigate('/expedientes/' + patient.id);
         } catch (error) {
