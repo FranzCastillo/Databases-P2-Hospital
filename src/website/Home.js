@@ -24,7 +24,10 @@ function BasicTable(filas) {
             </div>
         );
     }else{
-        return (
+        if(filas.length > 5 ){
+            filas = filas.slice(0,5);
+        }
+        return (            
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
@@ -152,7 +155,7 @@ function Home() {
     }, [userLoaded]);
 
     useEffect(() => {
-        supabase.rpc('get_consultas2', {id_medico_param: doctorId}).then(({ data, error }) => {
+        supabase.rpc('get_consultas2').then(({ data, error }) => {
             if (error) {
                 console.log(error);
             }else{
@@ -168,7 +171,7 @@ function Home() {
             {rol === "admin" ? <NavBarAdmin/> : <NavBarUser/>}
             {card(name, lastName, email)}
             <div className='ContentContainer' style={{marginLeft: '25%', marginRight: '25%', height: '100%'}}>
-                <h1>Mis Consultas</h1>
+                <h1>Consultas Recientes</h1>
                 <div className='TableContainer' >
                     {BasicTable(rows)}
                 </div>
