@@ -124,7 +124,8 @@ function NewRecord() {
         event.preventDefault();
         const user = await getUser();
         try {
-            await supabase
+            console.log("1. Success",patient.id, place.id, observations, userStatus.id, user.id, consulta_id);
+            const {data1, error1} = await supabase
                 .from("consultas")
                 .update({
                     paciente_id: patient.id,
@@ -132,52 +133,57 @@ function NewRecord() {
                     observaciones: observations,
                     status_id: userStatus.id,
                     id_medico: user.id,
-                    fecha: new Date().toLocaleString('es-GT', {timeZone: 'America/Guatemala'}),
+                    fecha: new Date(),
                 })
                 .match({id: consulta_id});
+            if (error1) {
+                console.log("1.",error1);
+            }
 
-            for (const disease of userDiseases) {
-                const {data, error} = await supabase
-                    .from("enfermedades_diagnosticadas")
-                    .update({
-                        enfermedad_id: disease.id,
-                    })
-                    .match({consulta_id: consulta_id});
-                if (error) {
-                    console.log(error);
-                }
-            }
-            for (const exam of userExams) {
-                const {data, error} = await supabase
-                    .from("examenes_aplicados")
-                    .update({
-                        examen_id: exam.id,
-                    })
-                    .match({consulta_id: consulta_id});
-                if (error) {
-                    console.log("EXAMS",error);
-                }
-            }
-            for (const treatment of userTreatments) {
-                const {data, error} = await supabase
-                    .from("tratamientos_aplicados")
-                    .update({
-                        tratamiento_id: treatment.id,
-                    })
-                    .match({consulta_id: consulta_id});
-                if (error) {
-                    console.log("TREATMENTS",error);
-                }
-            }
-            await supabase
-                .from("medicos_tratantes")
-                .update({
-                    medico_id: user.id,
-                })
-                .match({consulta_id: consulta_id});
-
-            alert("Consulta actualizada con éxito!");
-            navigate('/expedientes/' + patient.id);
+            // for (const disease of userDiseases) {
+            //     const {data, error} = await supabase
+            //         .from("enfermedades_diagnosticadas")
+            //         .update({
+            //             enfermedad_id: disease.id,
+            //         })
+            //         .match({consulta_id: consulta_id});
+            //     if (error) {
+            //         console.log(error);
+            //     }
+            // }
+            // for (const exam of userExams) {
+            //     const {data, error} = await supabase
+            //         .from("examenes_aplicados")
+            //         .update({
+            //             examen_id: exam.id,
+            //         })
+            //         .match({consulta_id: consulta_id});
+            //     if (error) {
+            //         console.log("EXAMS",error);
+            //     }
+            // }
+            // for (const treatment of userTreatments) {
+            //     const {data, error} = await supabase
+            //         .from("tratamientos_aplicados")
+            //         .update({
+            //             tratamiento_id: treatment.id,
+            //         })
+            //         .match({consulta_id: consulta_id});
+            //     if (error) {
+            //         console.log("TREATMENTS",error);
+            //     }
+            // }
+            // const{data2, error2} = await supabase
+            //     .from("medicos_tratantes")
+            //     .update({
+            //         medico_id: user.id,
+            //     })
+            //     .match({consulta_id: consulta_id});
+            // if (error2) {
+            //     console.log("MEDICOS",error2);
+            // }
+            // alert("Consulta actualizada con éxito!");
+            // navigate('/expedientes/' + patient.id);
         } catch (error) {
             console.log(error);
         }
